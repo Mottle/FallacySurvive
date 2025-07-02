@@ -1,0 +1,31 @@
+package dev.deepslate.fallacy.survive.network.handler
+
+import dev.deepslate.fallacy.survive.TheMod
+import dev.deepslate.fallacy.survive.network.packet.DrinkInWorldPacket
+import dev.deepslate.fallacy.survive.network.packet.ThirstSyncPacket
+import net.neoforged.bus.api.SubscribeEvent
+import net.neoforged.fml.common.EventBusSubscriber
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent
+
+@EventBusSubscriber(modid = TheMod.ID)
+object RegisterHandler {
+
+    const val NETWORK_PROTOCOL_VERSION = "MONKEY"
+
+    @SubscribeEvent
+    fun onPayloadRegister(event: RegisterPayloadHandlersEvent) {
+        val registrar = event.registrar(NETWORK_PROTOCOL_VERSION)
+
+        registrar.playToClient(
+            ThirstSyncPacket.Companion.TYPE, ThirstSyncPacket.Companion.STREAM_CODEC,
+            ThirstSyncHandler::handle
+        )
+
+
+        registrar.playToServer(
+            DrinkInWorldPacket.TYPE,
+            DrinkInWorldPacket.STREAM_CODEC,
+            DrinkInWorldHandler::handle
+        )
+    }
+}

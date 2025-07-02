@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory
 object TheMod {
     infix fun withID(name: String): ResourceLocation = ResourceLocation.fromNamespaceAndPath(ID, name)
 
-    const val ID = "survive"
+    const val ID = "fallacy_survive"
 
     val LOGGER: Logger = LoggerFactory.getLogger(ID)
 }

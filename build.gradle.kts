@@ -14,12 +14,18 @@ group = project.property("mod_group_id") as String
 
 repositories {
     mavenLocal()
+
     maven {
         name = "Kotlin for Forge"
         url = uri("https://thedarkcolour.github.io/KotlinForForge/")
         content {
             includeGroup("thedarkcolour")
         }
+    }
+
+    maven {
+        name = "ithundxr's Maven Snapshots"
+        url = uri("https://maven.ithundxr.dev/snapshots")
     }
 }
 
@@ -99,7 +105,9 @@ sourceSets["main"].resources {
 }
 
 dependencies {
-    implementation("thedarkcolour:kotlinforforge-neoforge:5.3.0")
+    implementation("thedarkcolour:kotlinforforge-neoforge:${project.property("kotlin4forge_version")}")
+
+    implementation(project(":base"))
 }
 
 // 模组元数据生成任务
