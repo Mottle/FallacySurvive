@@ -1,0 +1,27 @@
+{
+  "effect.fallacy_survive.dehydration": "Dehydration",
+  "effect.fallacy_survive.full": "Full",
+
+  "death.attack.fallacy_survive.dehydration": "%1$s died of dehydration",
+
+  "nutrition.fallacy_survive.carbohydrate": "Carbohydrate",
+  "nutrition.fallacy_survive.protein": "Protein",
+  "nutrition.fallacy_survive.fat": "Fat",
+  "nutrition.fallacy_survive.fiber": "Fiber",
+  "nutrition.fallacy_survive.electrolyte": "Electrolyte",
+
+  "gui.fallacy_survive.diet_ui.title": "Diet",
+
+  "item.tooltips.food_eat_times": "You've eaten %s times out of the last %s",
+  "item.tooltips.food_never_eat": "Haven't eaten recently",
+  "item.tooltips.full_level0": "Negligible",
+  "item.tooltips.full_level1": "Snack",
+  "item.tooltips.full_level2": "Light meal",
+  "item.tooltips.full_level3": "Full meal",
+  "item.tooltips.full_level4": "Feast",
+
+  "msg.fallacy_survive.eat3_4": "Not really feeling like eating anymore",
+  "msg.fallacy_survive.eat5_6": "You find it bland and unappetizing",
+  "msg.fallacy_survive.eat7_8": "You can barely stomach it",
+  "msg.fallacy_survive.eat_else": "Bleh"
+}

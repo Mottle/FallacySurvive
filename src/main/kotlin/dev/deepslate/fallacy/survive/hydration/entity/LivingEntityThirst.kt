@@ -4,13 +4,16 @@ import dev.deepslate.fallacy.survive.ModAttachments
 import dev.deepslate.fallacy.survive.ModAttributes
 import dev.deepslate.fallacy.survive.ModDamageTypes
 import dev.deepslate.fallacy.survive.effect.ModEffects
+import dev.deepslate.fallacy.survive.network.packet.ThirstSyncPacket
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.entity.LivingEntity
+import net.neoforged.neoforge.network.PacketDistributor
 import java.lang.Math.clamp
 import kotlin.math.min
 
-class LivingEntityThirst(val entity: LivingEntity): Thirst {
+class LivingEntityThirst(val entity: LivingEntity) : Thirst {
     companion object {
         private const val UPDATE_INTERVAL_TICKS = 20 * 60 * 2
     }
@@ -21,9 +24,9 @@ class LivingEntityThirst(val entity: LivingEntity): Thirst {
         get() = entity.getData(ModAttachments.THIRST)
         set(value) {
             entity.setData(ModAttachments.THIRST, value)
-//            if (entity is ServerPlayer) {
-//                PacketDistributor.sendToPlayer(entity, ThirstSyncPacket(this@PlayerThirst.value))
-//            }
+            if (entity is ServerPlayer) {
+                PacketDistributor.sendToPlayer(entity, ThirstSyncPacket(this@LivingEntityThirst.value))
+            }
         }
 
     override val max: Float

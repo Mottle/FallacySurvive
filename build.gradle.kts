@@ -15,6 +15,10 @@ group = project.property("mod_group_id") as String
 repositories {
     mavenLocal()
 
+    flatDir {
+        dirs("../lib")
+    }
+
     maven {
         name = "Kotlin for Forge"
         url = uri("https://thedarkcolour.github.io/KotlinForForge/")

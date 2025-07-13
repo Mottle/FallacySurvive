@@ -2,7 +2,6 @@ package dev.deepslate.fallacy.survive.effect
 
 import net.minecraft.world.effect.MobEffect
 import net.minecraft.world.effect.MobEffectCategory
-import net.minecraft.world.entity.LivingEntity
 
 class Dehydration : MobEffect(MobEffectCategory.HARMFUL, 0xffffff) {
 //    override fun shouldApplyEffectTickThisTick(duration: Int, amplifier: Int): Boolean = duration % 20 == 0

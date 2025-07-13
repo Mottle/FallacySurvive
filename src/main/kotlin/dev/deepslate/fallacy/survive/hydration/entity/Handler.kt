@@ -4,7 +4,7 @@ import dev.deepslate.fallacy.base.TickCollector
 import dev.deepslate.fallacy.survive.ModAttachments
 import dev.deepslate.fallacy.survive.ModCapabilities
 import dev.deepslate.fallacy.survive.TheMod
-import dev.deepslate.fallacy.survive.hydration.DrinkHelper
+import dev.deepslate.fallacy.survive.hydration.logic.DrinkHelper
 import dev.deepslate.fallacy.survive.network.packet.DrinkInWorldPacket
 import dev.deepslate.fallacy.survive.network.packet.ThirstSyncPacket
 import net.minecraft.advancements.CriteriaTriggers
@@ -45,6 +45,8 @@ object Handler {
         val hand = event.hand
         val player = event.entity
 
+        //必须左右是都是空手
+        if (!player.mainHandItem.isEmpty || !player.offhandItem.isEmpty) return
         if (!player.isShiftKeyDown) return
         if (stack.isEmpty && !event.isCanceled && hand == InteractionHand.MAIN_HAND) {
             val useBlockResult = state.useItemOn(stack, level, player, hand, event.hitVec)
@@ -59,8 +61,10 @@ object Handler {
             val result = DrinkHelper.attemptDrink(level, player)
             if (result != InteractionResult.PASS) {
                 event.isCanceled = true
-                event.cancellationResult = result
+                event.cancellationResult = InteractionResult.FAIL
             }
+
+            if (result.shouldSwing()) player.swing(InteractionHand.MAIN_HAND, true)
         }
 
         if (state.block is AnvilBlock || state.block is BarrelBlock) event.useBlock = TriState.TRUE
@@ -69,9 +73,13 @@ object Handler {
     //只在Client Side触发，遂向Server发送DrinkInWorldPacket
     @SubscribeEvent
     fun onPlayerRightClickEmpty(event: PlayerInteractEvent.RightClickEmpty) {
+        if (event.side.isServer) return
+
         val player = event.entity
 
-        if (event.hand != InteractionHand.MAIN_HAND || !event.itemStack.isEmpty) return
+        if (event.hand != InteractionHand.MAIN_HAND) return
+        //必须左右是都是空手
+        if (!player.offhandItem.isEmpty || !player.mainHandItem.isEmpty) return
         if (!player.isShiftKeyDown) return
 
         val result = DrinkHelper.attemptDrink(event.level, player)

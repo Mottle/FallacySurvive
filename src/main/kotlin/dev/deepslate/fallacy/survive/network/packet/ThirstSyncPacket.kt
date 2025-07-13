@@ -9,8 +9,10 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload
 data class ThirstSyncPacket(val value: Float) : CustomPacketPayload {
 
     companion object {
+        @JvmStatic
         val TYPE = CustomPacketPayload.Type<ThirstSyncPacket>(TheMod.withID("thirst_sync_packet"))
 
+        @JvmStatic
         val STREAM_CODEC: StreamCodec<ByteBuf, ThirstSyncPacket> = StreamCodec.composite(
             ByteBufCodecs.FLOAT, ThirstSyncPacket::value, ::ThirstSyncPacket
         )

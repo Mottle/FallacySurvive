@@ -1,4 +1,4 @@
-package dev.deepslate.fallacy.survive.hydration
+package dev.deepslate.fallacy.survive.hydration.logic
 
 import dev.deepslate.fallacy.base.TickCollector
 import dev.deepslate.fallacy.survive.ModAttachments

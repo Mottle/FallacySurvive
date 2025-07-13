@@ -2,6 +2,8 @@ package dev.deepslate.fallacy.survive.network.handler
 
 import dev.deepslate.fallacy.survive.TheMod
 import dev.deepslate.fallacy.survive.network.packet.DrinkInWorldPacket
+import dev.deepslate.fallacy.survive.network.packet.FoodHistorySyncPacket
+import dev.deepslate.fallacy.survive.network.packet.NutritionStateSyncPacket
 import dev.deepslate.fallacy.survive.network.packet.ThirstSyncPacket
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
@@ -26,6 +28,18 @@ object RegisterHandler {
             DrinkInWorldPacket.TYPE,
             DrinkInWorldPacket.STREAM_CODEC,
             DrinkInWorldHandler::handle
+        )
+
+        registrar.playToClient(
+            NutritionStateSyncPacket.TYPE,
+            NutritionStateSyncPacket.STREAM_CODEC,
+            NutritionStateSyncHandler::handle
+        )
+
+        registrar.playToClient(
+            FoodHistorySyncPacket.TYPE,
+            FoodHistorySyncPacket.STREAM_CODEC,
+            FoodHistorySyncHandler::handle
         )
     }
 }

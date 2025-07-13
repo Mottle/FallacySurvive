@@ -1,9 +1,11 @@
 package dev.deepslate.fallacy.survive
 
 import com.mojang.serialization.Codec
+import dev.deepslate.fallacy.survive.diet.entity.FoodHistory
+import dev.deepslate.fallacy.survive.diet.entity.LivingEntityNutritionState
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
+import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
 import net.neoforged.neoforge.attachment.AttachmentType
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
@@ -24,10 +26,24 @@ object ModAttachments {
     val LAST_DRINK_TICK_STAMP: DeferredHolder<AttachmentType<*>, AttachmentType<Int>> =
         registry.register("last_drink_tick_stamp") { _ -> AttachmentType.builder { _ -> -1 }.build() }
 
+    @JvmStatic
+    val NUTRITION_STATE: DeferredHolder<AttachmentType<*>, AttachmentType<LivingEntityNutritionState>> =
+        registry.register("nutrition_state") { _ ->
+            AttachmentType.builder { _ -> LivingEntityNutritionState.DEFAULT }
+                .serialize(LivingEntityNutritionState.CODEC).copyOnDeath().build()
+        }
+
+    //用于记录最近吃过的食物
+    @JvmStatic
+    val FOOD_HISTORY: DeferredHolder<AttachmentType<*>, AttachmentType<FoodHistory>> =
+        registry.register("food_history") { _ ->
+            AttachmentType.builder { _ -> FoodHistory() }.serialize(FoodHistory.CODEC).copyOnDeath().build()
+        }
+
     @EventBusSubscriber(modid = TheMod.ID)
     object RegisterHandler {
         @SubscribeEvent
-        fun onModLoadCompleted(event: FMLCommonSetupEvent) {
+        fun onModLoadCompleted(event: FMLConstructModEvent) {
             event.enqueueWork {
                 registry.register(MOD_BUS)
             }

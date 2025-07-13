@@ -7,14 +7,16 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent
+import net.neoforged.fml.event.lifecycle.FMLConstructModEvent
 import net.neoforged.neoforge.registries.DeferredHolder
 import net.neoforged.neoforge.registries.DeferredRegister
 import thedarkcolour.kotlinforforge.neoforge.forge.MOD_BUS
 
 object ModEffects {
+    @JvmStatic
     private val registry = DeferredRegister.create(BuiltInRegistries.MOB_EFFECT, TheMod.ID)
 
+    @JvmStatic
     val DEHYDRATION: DeferredHolder<MobEffect, MobEffect> = registry.register("dehydration") { _ ->
         val id = TheMod.withID("effect.dehydration")
         Dehydration().addAttributeModifier(
@@ -24,12 +26,13 @@ object ModEffects {
         )
     }
 
+    @JvmStatic
     val FULL: DeferredHolder<MobEffect, Full> = registry.register("full", ::Full)
 
     @EventBusSubscriber(modid = TheMod.ID)
     object RegisterHandler {
         @SubscribeEvent
-        fun onModLoadComplete(event: FMLCommonSetupEvent) {
+        fun onModLoadComplete(event: FMLConstructModEvent) {
             event.enqueueWork {
                 registry.register(MOD_BUS)
             }
