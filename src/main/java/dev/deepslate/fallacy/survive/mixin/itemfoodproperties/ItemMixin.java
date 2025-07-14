@@ -1,7 +1,7 @@
 package dev.deepslate.fallacy.survive.mixin.itemfoodproperties;
 
 import dev.deepslate.fallacy.survive.diet.item.ExtendedFoodProperties;
-import dev.deepslate.fallacy.survive.inject.ItemFoodPropertiesExtension;
+import dev.deepslate.fallacy.survive.inject.itemfoodproperties.ItemFoodPropertiesExtension;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;

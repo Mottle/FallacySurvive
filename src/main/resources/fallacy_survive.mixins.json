@@ -5,7 +5,8 @@
     "compatibilityLevel": "JAVA_21",
     "mixins": [
         "fooddata.PlayerMixin",
-        "itemfoodproperties.ItemMixin"
+        "itemfoodproperties.ItemMixin",
+        "recordmovement.ServerPlayerMixin"
     ],
     "client": [
     ],

@@ -3,6 +3,7 @@ package dev.deepslate.fallacy.survive.diet.logic
 import dev.deepslate.fallacy.survive.ModCapabilities
 import dev.deepslate.fallacy.survive.TheMod
 import dev.deepslate.fallacy.survive.diet.ModNutritionTypes
+import dev.deepslate.fallacy.survive.diet.entity.cause
 import net.minecraft.server.level.ServerPlayer
 import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.SubscribeEvent
@@ -23,6 +24,6 @@ object ProteinCauseHandler {
         val finalDamage = event.newDamage
         val cause = finalDamage.coerceIn(0f, 1f)
 
-        diet.nutrition.add(ModNutritionTypes.PROTEIN, -cause)
+        diet.cause(ModNutritionTypes.PROTEIN, cause, player)
     }
 }

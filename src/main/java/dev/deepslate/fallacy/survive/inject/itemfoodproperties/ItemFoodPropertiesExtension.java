@@ -1,4 +1,4 @@
-package dev.deepslate.fallacy.survive.inject;
+package dev.deepslate.fallacy.survive.inject.itemfoodproperties;
 
 import dev.deepslate.fallacy.survive.diet.item.ExtendedFoodProperties;
 import org.jetbrains.annotations.ApiStatus;

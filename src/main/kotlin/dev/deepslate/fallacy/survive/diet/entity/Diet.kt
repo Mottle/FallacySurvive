@@ -1,7 +1,11 @@
 package dev.deepslate.fallacy.survive.diet.entity
 
 import dev.deepslate.fallacy.survive.ModDataComponents
+import dev.deepslate.fallacy.survive.diet.NutrientType
+import dev.deepslate.fallacy.survive.diet.alternativeAttribute
+import dev.deepslate.fallacy.survive.diet.attribute
 import dev.deepslate.fallacy.survive.diet.item.FoodNutrition
+import net.minecraft.core.Holder
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.entity.LivingEntity
 import net.minecraft.world.item.ItemStack
@@ -34,3 +38,19 @@ interface Diet<E : LivingEntity> {
 
     fun handleNutrition(nutrition: FoodNutrition)
 }
+
+fun Diet<*>.cause(holder: Holder<NutrientType>, value: Float, entity: LivingEntity) {
+    this.cause(holder.value(), value, entity)
+}
+
+fun Diet<*>.cause(type: NutrientType, value: Float, entity: LivingEntity) {
+    if (type !in nutrition) return
+
+    val maxValue = entity.getAttributeValue(type.attribute ?: type.alternativeAttribute!!)
+
+    nutrition = nutrition.add(type, -value, entity)
+}
+
+fun Diet<*>.contains(type: NutrientType): Boolean = type in nutrition
+
+fun Diet<*>.contains(holder: Holder<NutrientType>): Boolean = holder in nutrition

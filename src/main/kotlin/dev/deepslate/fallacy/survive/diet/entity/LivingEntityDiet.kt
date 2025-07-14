@@ -40,7 +40,7 @@ class LivingEntityDiet<E : LivingEntity>(override val entity: E) : Diet<E>, Sync
 
     override fun handleNutrition(nutrition: FoodNutrition) {
         val nutritionState = entity.getData(ModAttachments.NUTRITION_STATE)
-        val new = nutritionState.add(nutrition)
+        val new = nutritionState.add(nutrition, entity)
         new.set(entity)
     }
 

@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec
 import dev.deepslate.fallacy.survive.TheMod
 import io.netty.buffer.ByteBuf
 import net.minecraft.core.Registry
+import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
 import net.minecraft.network.codec.StreamCodec
@@ -13,8 +14,9 @@ import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
 import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.RegistryBuilder
+import kotlin.jvm.optionals.getOrNull
 
-data class NutritionType(
+data class NutrientType(
     val id: ResourceLocation,
     val minValue: Float = -100f,
     val maxValue: Float = 100f,
@@ -22,17 +24,17 @@ data class NutritionType(
 ) {
     companion object {
         @JvmStatic
-        val KEY: ResourceKey<Registry<NutritionType>> = ResourceKey.createRegistryKey(TheMod.withID("nutrition"))
+        val KEY: ResourceKey<Registry<NutrientType>> = ResourceKey.createRegistryKey(TheMod.withID("nutrition"))
 
         @JvmStatic
-        val REGISTRY: Registry<NutritionType> = RegistryBuilder(KEY).sync(true).maxId(256).create()
+        val REGISTRY: Registry<NutrientType> = RegistryBuilder(KEY).sync(true).maxId(256).create()
 
         @JvmStatic
-        val CODEC: Codec<NutritionType> = ResourceLocation.CODEC.xmap(::NutritionType, NutritionType::id)
+        val CODEC: Codec<NutrientType> = ResourceLocation.CODEC.xmap(::NutrientType, NutrientType::id)
 
         @JvmStatic
-        val STREAM_CODEC: StreamCodec<ByteBuf, NutritionType> =
-            ResourceLocation.STREAM_CODEC.map(::NutritionType, NutritionType::id)
+        val STREAM_CODEC: StreamCodec<ByteBuf, NutrientType> =
+            ResourceLocation.STREAM_CODEC.map(::NutrientType, NutrientType::id)
 
 //        @JvmStatic
 //        val CODEC: Codec<NutritionType> = RecordCodecBuilder.create { instance ->
@@ -66,7 +68,7 @@ data class NutritionType(
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
-        if (other !is NutritionType) return false
+        if (other !is NutrientType) return false
         return id == other.id
     }
 
@@ -78,3 +80,19 @@ data class NutritionType(
         return result
     }
 }
+
+val NutrientType.attributeID: ResourceLocation
+    get() = ResourceLocation.fromNamespaceAndPath(
+        id.namespace,
+        "generic.max_${id.path}"
+    )
+
+val NutrientType.attribute get() = BuiltInRegistries.ATTRIBUTE.getHolder(attributeID).getOrNull()
+
+val NutrientType.alternativeAttributeID: ResourceLocation
+    get() = ResourceLocation.fromNamespaceAndPath(
+        id.namespace,
+        "player.max_${id.path}"
+    )
+
+val NutrientType.alternativeAttribute get() = BuiltInRegistries.ATTRIBUTE.getHolder(alternativeAttributeID).getOrNull()

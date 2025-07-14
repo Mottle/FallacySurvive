@@ -20,7 +20,9 @@ import dev.deepslate.fallacy.base.client.screen.UIContext
 import dev.deepslate.fallacy.base.client.screen.component.ContextWrapperUI
 import dev.deepslate.fallacy.base.client.screen.component.ProcessBar
 import dev.deepslate.fallacy.survive.ModAttachments
-import dev.deepslate.fallacy.survive.diet.NutritionType
+import dev.deepslate.fallacy.survive.diet.NutrientType
+import dev.deepslate.fallacy.survive.diet.alternativeAttribute
+import dev.deepslate.fallacy.survive.diet.attribute
 import dev.deepslate.fallacy.survive.diet.entity.LivingEntityNutritionState
 import dev.deepslate.fallacy.utils.RGB
 import net.minecraft.client.Minecraft
@@ -86,12 +88,15 @@ class DietUI : ContextWrapperUI() {
 //        val array = arrayOf(carbohydrate, protein, fat, fiber, electrolyte).filterNotNull()
         val array = nutrition.map { (type, value) ->
             //type序列化时不带color
-            val sourceType = NutritionType.REGISTRY.get(type.id) ?: type
+            val sourceType = NutrientType.REGISTRY.get(type.id) ?: type
+            val player = Minecraft.getInstance().player!!
+
+            val attributeValue = with(sourceType) { attribute ?: alternativeAttribute!! }.let(player::getAttributeValue)
 
             DescriptionProcessBar(
                 sourceType.component,
                 value.toInt(),
-                sourceType.maxValue.toInt(),
+                attributeValue.toInt(),
                 RGB.from(sourceType.displayColor)
             )
         }

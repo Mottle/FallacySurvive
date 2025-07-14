@@ -3,9 +3,7 @@ package dev.deepslate.fallacy.survive.diet.entity
 import com.mojang.serialization.Codec
 import dev.deepslate.fallacy.survive.ModAttachments
 import dev.deepslate.fallacy.survive.TheMod
-import dev.deepslate.fallacy.survive.diet.ModNutritionTypes
-import dev.deepslate.fallacy.survive.diet.NutritionContainer
-import dev.deepslate.fallacy.survive.diet.NutritionType
+import dev.deepslate.fallacy.survive.diet.*
 import dev.deepslate.fallacy.survive.diet.item.FoodNutrition
 import dev.deepslate.fallacy.survive.network.packet.NutritionStateSyncPacket
 import io.netty.buffer.ByteBuf
@@ -25,25 +23,25 @@ import net.neoforged.neoforge.network.PacketDistributor
  * fiber: 被动消耗
  * electrolyte: 运动消耗
  */
-data class LivingEntityNutritionState(val container: NutritionContainer = NutritionContainer.EMPTY) :
-    Iterable<NutritionContainer.Entry> by container {
+data class LivingEntityNutritionState(val container: NutrientContainer = NutrientContainer.EMPTY) :
+    Iterable<NutrientContainer.Entry> by container {
 
     companion object {
         @JvmStatic
-        val CODEC: Codec<LivingEntityNutritionState> = NutritionContainer.CODEC.xmap(
+        val CODEC: Codec<LivingEntityNutritionState> = NutrientContainer.CODEC.xmap(
             ::LivingEntityNutritionState,
             LivingEntityNutritionState::container
         )
 
         @JvmStatic
-        val STREAM_CODEC: StreamCodec<ByteBuf, LivingEntityNutritionState> = NutritionContainer.STREAM_CODEC.map(
+        val STREAM_CODEC: StreamCodec<ByteBuf, LivingEntityNutritionState> = NutrientContainer.STREAM_CODEC.map(
             ::LivingEntityNutritionState,
             LivingEntityNutritionState::container
         )
 
         @JvmStatic
         val DEFAULT = LivingEntityNutritionState(
-            NutritionContainer.ofHolder(
+            NutrientContainer.ofHolder(
                 ModNutritionTypes.CARBOHYDRATE to 90f,
                 ModNutritionTypes.PROTEIN to 90f,
                 ModNutritionTypes.FAT to 90f,
@@ -72,20 +70,27 @@ data class LivingEntityNutritionState(val container: NutritionContainer = Nutrit
 //        }
 //        ?: copy(nutritionRecord = nutritionRecord + nutrition)
 
-    fun add(type: NutritionType, value: Float) = copy(container = container.update(type) { old -> old + value })
+    fun add(type: NutrientType, value: Float, entity: LivingEntity) =
+        copy(container = container.update(type) { old -> old + value }).finetune(entity)
 
-    fun add(holder: Holder<NutritionType>, value: Float) =
-        copy(container = container.update(holder) { old -> old + value })
+    fun add(holder: Holder<NutrientType>, value: Float, entity: LivingEntity) =
+        copy(container = container.update(holder) { old -> old + value }).finetune(entity)
 
-    fun add(foodNutrition: FoodNutrition) = copy(container = container + foodNutrition.container)
+    fun add(foodNutrition: FoodNutrition, entity: LivingEntity) =
+        copy(container = container + foodNutrition.container).finetune(entity)
 
-    infix operator fun get(type: NutritionType) = container[type]
+    private fun finetune(entity: LivingEntity) = container.associate { (type, value) ->
+        val maxAttributeValue = entity.getAttributeValue(type.attribute ?: type.alternativeAttribute!!).toFloat()
+        type to value.coerceAtMost(maxAttributeValue)
+    }.let(::NutrientContainer).let(::LivingEntityNutritionState)
 
-    infix operator fun get(holder: Holder<NutritionType>) = container[holder]
+    infix operator fun get(type: NutrientType) = container[type]
 
-    infix operator fun contains(type: NutritionType) = container.contains(type)
+    infix operator fun get(holder: Holder<NutrientType>) = container[holder]
 
-    infix operator fun contains(holder: Holder<NutritionType>) = container.contains(holder)
+    infix operator fun contains(type: NutrientType) = container.contains(type)
+
+    infix operator fun contains(holder: Holder<NutrientType>) = container.contains(holder)
 
     fun set(entity: LivingEntity) {
         entity.setData(ModAttachments.NUTRITION_STATE, this)

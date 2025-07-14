@@ -17,39 +17,45 @@ object ModAttributes {
     private val registry = DeferredRegister.create(BuiltInRegistries.ATTRIBUTE, TheMod.ID)
 
     @JvmStatic
-    val MAX_HUNGER: DeferredHolder<Attribute, Attribute> = registry.register("fallacy.max_hunger") { _ ->
-        RangedAttribute("fallacy.attribute.name.player.max_hunger", 20.0, 10.0, 1024.0).setSyncable(true)
+    val MAX_HUNGER: DeferredHolder<Attribute, Attribute> =
+        registry.register("generic.max_hunger") { _ ->
+            RangedAttribute("fallacy_survive.attribute.name.generic.max_hunger", 20.0, 10.0, 1024.0)
+                .setSyncable(true)
+        }
+
+    @JvmStatic
+    val MAX_THIRST: DeferredHolder<Attribute, Attribute> = registry.register("generic.max_thirst") { _ ->
+        RangedAttribute("fallacy_survive.attribute.name.generic.max_thirst", 20.0, 10.0, 1024.0).setSyncable(true)
     }
 
     @JvmStatic
-    val MAX_THIRST: DeferredHolder<Attribute, Attribute> = registry.register("fallacy.max_thirst") { _ ->
-        RangedAttribute("fallacy.attribute.name.player.max_thirst", 20.0, 10.0, 1024.0).setSyncable(true)
+    val MAX_CARBOHYDRATE: DeferredHolder<Attribute, Attribute> =
+        registry.register("generic.max_carbohydrate") { _ ->
+            RangedAttribute("fallacy_survive.attribute.name.generic.max_carbohydrates", 100.0, 0.0, 1024.0)
+                .setSyncable(true)
+        }
+
+    @JvmStatic
+    val MAX_PROTEIN: DeferredHolder<Attribute, Attribute> = registry.register("generic.max_protein") { _ ->
+        RangedAttribute("fallacy_survive.attribute.name.generic.max_protein", 100.0, 0.0, 1024.0).setSyncable(true)
     }
 
     @JvmStatic
-    val MAX_CARBOHYDRATE: DeferredHolder<Attribute, Attribute> = registry.register("fallacy.max_carbohydrates") { _ ->
-        RangedAttribute("fallacy.attribute.name.player.max_carbohydrates", 100.0, 0.0, 1024.0).setSyncable(true)
+    val MAX_FAT: DeferredHolder<Attribute, Attribute> = registry.register("generic.max_fat") { _ ->
+        RangedAttribute("fallacy_survive.attribute.name.generic.max_fat", 100.0, 0.0, 1024.0).setSyncable(true)
     }
 
     @JvmStatic
-    val MAX_PROTEIN: DeferredHolder<Attribute, Attribute> = registry.register("fallacy.max_protein") { _ ->
-        RangedAttribute("fallacy.attribute.name.player.max_protein", 100.0, 0.0, 1024.0).setSyncable(true)
+    val MAX_FIBER: DeferredHolder<Attribute, Attribute> = registry.register("generic.max_fiber") { _ ->
+        RangedAttribute("fallacy_survive.attribute.name.generic.max_fiber", 100.0, 0.0, 1024.0).setSyncable(true)
     }
 
     @JvmStatic
-    val MAX_FAT: DeferredHolder<Attribute, Attribute> = registry.register("fallacy.max_fat") { _ ->
-        RangedAttribute("fallacy.attribute.name.player.max_fat", 100.0, 0.0, 1024.0).setSyncable(true)
-    }
-
-    @JvmStatic
-    val MAX_FIBER: DeferredHolder<Attribute, Attribute> = registry.register("fallacy.max_fiber") { _ ->
-        RangedAttribute("fallacy.attribute.name.player.max_fiber", 100.0, 0.0, 1024.0).setSyncable(true)
-    }
-
-    @JvmStatic
-    val MAX_ELECTROLYTE: DeferredHolder<Attribute, Attribute> = registry.register("fallacy.max_electrolyte") { _ ->
-        RangedAttribute("fallacy.attribute.name.player.max_electrolyte", 100.0, 0.0, 1024.0).setSyncable(true)
-    }
+    val MAX_ELECTROLYTE: DeferredHolder<Attribute, Attribute> =
+        registry.register("generic.max_electrolyte") { _ ->
+            RangedAttribute("fallacy_survive.attribute.name.generic.max_electrolyte", 100.0, 0.0, 1024.0)
+                .setSyncable(true)
+        }
 
     @EventBusSubscriber(modid = TheMod.ID)
     object RegisterHandler {

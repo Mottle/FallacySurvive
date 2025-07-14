@@ -21,9 +21,9 @@ object ModAttachments {
         AttachmentType.builder { _ -> 20f }.serialize(Codec.FLOAT).build()
     }
 
-    //客户端和服务端各自维护一个LAST_DRINK_TICK，不进行同步
+    //用于记录玩家上一次喝水的时间戳，客户端和服务端各自维护一个LAST_DRINK_TICK，不进行同步
     @JvmStatic
-    val LAST_DRINK_TICK_STAMP: DeferredHolder<AttachmentType<*>, AttachmentType<Int>> =
+    internal val LAST_DRINK_TICK_STAMP: DeferredHolder<AttachmentType<*>, AttachmentType<Int>> =
         registry.register("last_drink_tick_stamp") { _ -> AttachmentType.builder { _ -> -1 }.build() }
 
     @JvmStatic
@@ -38,6 +38,13 @@ object ModAttachments {
     val FOOD_HISTORY: DeferredHolder<AttachmentType<*>, AttachmentType<FoodHistory>> =
         registry.register("food_history") { _ ->
             AttachmentType.builder { _ -> FoodHistory() }.serialize(FoodHistory.CODEC).copyOnDeath().build()
+        }
+
+    //用于记录玩家最近5秒的奔跑水平距离
+    @JvmStatic
+    internal val LAST_5S_SPRINT_DISTANCE: DeferredHolder<AttachmentType<*>, AttachmentType<Float>> =
+        registry.register("last_5s_sprint_distance") { _ ->
+            AttachmentType.builder { _ -> 0f }.serialize(Codec.FLOAT).build()
         }
 
     @EventBusSubscriber(modid = TheMod.ID)

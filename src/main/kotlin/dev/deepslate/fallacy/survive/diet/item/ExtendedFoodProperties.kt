@@ -2,7 +2,7 @@ package dev.deepslate.fallacy.survive.diet.item
 
 import dev.deepslate.fallacy.survive.ModDataComponents
 import dev.deepslate.fallacy.survive.TheMod
-import dev.deepslate.fallacy.survive.inject.ItemFoodPropertiesExtension
+import dev.deepslate.fallacy.survive.inject.itemfoodproperties.ItemFoodPropertiesExtension
 import net.minecraft.core.component.DataComponents
 import net.minecraft.world.food.FoodProperties
 import net.neoforged.bus.api.EventPriority
