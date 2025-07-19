@@ -41,11 +41,11 @@ object ModAttachments {
         }
 
     //用于记录玩家最近5秒的奔跑水平距离
-    @JvmStatic
-    internal val LAST_5S_SPRINT_DISTANCE: DeferredHolder<AttachmentType<*>, AttachmentType<Float>> =
-        registry.register("last_5s_sprint_distance") { _ ->
-            AttachmentType.builder { _ -> 0f }.serialize(Codec.FLOAT).build()
-        }
+//    @JvmStatic
+//    internal val LAST_5S_SPRINT_DISTANCE: DeferredHolder<AttachmentType<*>, AttachmentType<Float>> =
+//        registry.register("last_5s_sprint_distance") { _ ->
+//            AttachmentType.builder { _ -> 0f }.serialize(Codec.FLOAT).build()
+//        }
 
     @EventBusSubscriber(modid = TheMod.ID)
     object RegisterHandler {
