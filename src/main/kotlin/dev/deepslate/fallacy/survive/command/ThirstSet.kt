@@ -8,7 +8,7 @@ import dev.deepslate.fallacy.utils.command.GameCommand
 import net.minecraft.commands.CommandSourceStack
 import net.minecraft.network.chat.Component
 
-object ThirstSet : GameCommand {
+data object ThirstSet : GameCommand {
     override val source: String = "fallacy thirst set %f<value>"
     override val suggestions: Map<String, SuggestionProvider<CommandSourceStack>> = emptyMap()
 

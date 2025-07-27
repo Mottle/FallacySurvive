@@ -51,14 +51,21 @@ class DietUI : ContextWrapperUI() {
         return Center(Sized(Size.staticSize(300, 200), window))
     }
 
+    private var nutrientState: LivingEntityNutritionState? = null
+
+    fun withExistedNutritionState(nutrition: LivingEntityNutritionState): DietUI {
+        this.nutrientState = nutrition
+        return this
+    }
+
     private fun getTitle() = Sized(
         Size.percentage(1f, 0.2f),
         Center(Text.Builder(Component.translatable("gui.fallacy_survive.diet_ui.title")).withColor(Color.BLACK))
     )
 
     private fun getList(): UIComponent {
-        val nutrition =
-            Minecraft.getInstance().player?.getData(ModAttachments.NUTRITION_STATE) ?: LivingEntityNutritionState()
+        val nutrition = nutrientState ?: Minecraft.getInstance().player?.getData(ModAttachments.NUTRITION_STATE)
+        ?: LivingEntityNutritionState()
 //        val carbohydrate = if (nutrition.carbohydrate is LivingEntityNutritionState.Nutrition.State) DescriptionProcessBar(
 //            "item.fallacy.diet_data.carbohydrate",
 //            nutrition.carbohydrate.value.toInt(),
