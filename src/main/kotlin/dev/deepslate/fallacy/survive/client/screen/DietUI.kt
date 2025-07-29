@@ -108,7 +108,7 @@ class DietUI : ContextWrapperUI() {
             )
         }
 
-        val height = 100 + max(array.size * 20 - 50, 0)
+        val height = max(array.size * 20, 40)
 
         return Sized(Size.staticSize(220, height), ListView.Builder().withSpacing(10).build(array))
     }
