@@ -46,8 +46,6 @@ fun Diet<*>.cause(holder: Holder<NutrientType>, value: Float, entity: LivingEnti
 fun Diet<*>.cause(type: NutrientType, value: Float, entity: LivingEntity) {
     if (type !in nutrition) return
 
-    val maxValue = entity.getAttributeValue(type.attribute ?: type.alternativeAttribute!!)
-
     nutrition = nutrition.add(type, -value, entity)
 }
 

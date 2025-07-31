@@ -39,7 +39,7 @@ object ElectrolyteCauseHandler {
 
         val player = event.entity as? ServerPlayer ?: return
         val movementRecord = player as MovementRecord
-        val sprintDistance5s = movementRecord.`fallacy$getSprintDistance`()
+        val sprintDistance5s = movementRecord.`fallacy$getAndResetSprintDistance`()
         val diet = player.getCapability(ModCapabilities.DIET)!!
 
         if (!diet.contains(ModNutritionTypes.ELECTROLYTE)) return

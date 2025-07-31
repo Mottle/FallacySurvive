@@ -1,6 +1,7 @@
 package dev.deepslate.fallacy.survive.mixin.recordmovement;
 
 import dev.deepslate.fallacy.survive.inject.recordmovement.MovementRecord;
+import it.unimi.dsi.fastutil.ints.Int2FloatArrayMap;
 import net.minecraft.server.level.ServerPlayer;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
