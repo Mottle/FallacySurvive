@@ -30,7 +30,8 @@ object ElectrolyteCauseHandler {
         val dis = (player.walkDist - player.walkDistO).absoluteValue
         val movementRecord = player as MovementRecord
 
-        movementRecord.`fallacy$recordSprint`(movementRecord.`fallacy$getSprintDistance`() + dis)
+        movementRecord.`fallacy$setSprint`(movementRecord.`fallacy$getSprintDistance`() + dis)
+//        TheMod.LOGGER.debug("sprint distance ${movementRecord.`fallacy$getSprintDistance`()}, record: $dis")
     }
 
     @SubscribeEvent
@@ -44,7 +45,9 @@ object ElectrolyteCauseHandler {
 
         if (!diet.contains(ModNutritionTypes.ELECTROLYTE)) return
 
-        diet.cause(ModNutritionTypes.ELECTROLYTE, sprintDistance5s * 0.01f, player)
+//        TheMod.LOGGER.debug("cause ${sprintDistance5s * 0.01f} ELECTROLYTE")
+
+        diet.cause(ModNutritionTypes.ELECTROLYTE, sprintDistance5s * 0.005f, player)
     }
 
     @SubscribeEvent
@@ -65,7 +68,7 @@ object ElectrolyteCauseHandler {
 
         if (playerGravity <= 0.01) return
 
-        val cause = ((playerGravity / defaultGravity) * 0.1).toFloat()
+        val cause = ((playerGravity / defaultGravity) * 0.05).toFloat()
 
         diet.cause(ModNutritionTypes.ELECTROLYTE, cause, player)
     }

@@ -16,13 +16,11 @@ import net.neoforged.neoforge.registries.NewRegistryEvent
 import net.neoforged.neoforge.registries.RegistryBuilder
 import kotlin.jvm.optionals.getOrNull
 
-data class NutrientType(
-    val id: ResourceLocation,
-    val minValue: Float = -100f,
-    val maxValue: Float = 100f,
-    val displayColor: Int = 0xff4500
-) {
+data class NutrientType(val id: ResourceLocation) {
     companion object {
+
+        private const val HASH_BASE = 10007 * 31
+
         @JvmStatic
         val KEY: ResourceKey<Registry<NutrientType>> = ResourceKey.createRegistryKey(TheMod.withID("nutrition"))
 
@@ -72,13 +70,7 @@ data class NutrientType(
         return id == other.id
     }
 
-    override fun hashCode(): Int {
-        var result = minValue.hashCode()
-        result = 31 * result + maxValue.hashCode()
-        result = 31 * result + id.hashCode()
-        result = 31 * result + component.hashCode()
-        return result
-    }
+    override fun hashCode(): Int = HASH_BASE + id.hashCode()
 }
 
 val NutrientType.attributeID: ResourceLocation

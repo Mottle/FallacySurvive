@@ -2,8 +2,6 @@ package dev.deepslate.fallacy.survive.diet.entity
 
 import dev.deepslate.fallacy.survive.ModDataComponents
 import dev.deepslate.fallacy.survive.diet.NutrientType
-import dev.deepslate.fallacy.survive.diet.alternativeAttribute
-import dev.deepslate.fallacy.survive.diet.attribute
 import dev.deepslate.fallacy.survive.diet.item.FoodNutrition
 import net.minecraft.core.Holder
 import net.minecraft.world.effect.MobEffectInstance
@@ -49,6 +47,6 @@ fun Diet<*>.cause(type: NutrientType, value: Float, entity: LivingEntity) {
     nutrition = nutrition.add(type, -value, entity)
 }
 
-fun Diet<*>.contains(type: NutrientType): Boolean = type in nutrition
+infix operator fun Diet<*>.contains(type: NutrientType): Boolean = type in nutrition
 
-fun Diet<*>.contains(holder: Holder<NutrientType>): Boolean = holder in nutrition
+infix operator fun Diet<*>.contains(holder: Holder<NutrientType>): Boolean = holder in nutrition

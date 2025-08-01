@@ -10,7 +10,7 @@
     "nutrition.fallacy_survive.fiber": "纤维",
     "nutrition.fallacy_survive.electrolyte": "电解质",
 
-    "gui.fallacy_survive.diet_ui.title": "饮食",
+    "gui.fallacy_survive.diet_ui.title": "营养",
 
     "item.tooltips.food_eat_times": "在过去%s次中你食用了%s次",
     "item.tooltips.food_never_eat": "最近还没吃过呢",

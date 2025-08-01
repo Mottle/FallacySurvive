@@ -13,29 +13,19 @@ object ModNutritionTypes {
     private val registry = DeferredRegister.create(NutrientType.REGISTRY, TheMod.ID)
 
     @JvmStatic
-    val CARBOHYDRATE: DeferredHolder<NutrientType, NutrientType> = registry.register("carbohydrate") { id ->
-        NutrientType(id, displayColor = 0xff4500)
-    }
+    val CARBOHYDRATE: DeferredHolder<NutrientType, NutrientType> = registry.register("carbohydrate", ::NutrientType)
 
     @JvmStatic
-    val PROTEIN: DeferredHolder<NutrientType, NutrientType> = registry.register("protein") { id ->
-        NutrientType(id, displayColor = 0xffa500)
-    }
+    val PROTEIN: DeferredHolder<NutrientType, NutrientType> = registry.register("protein", ::NutrientType)
 
     @JvmStatic
-    val FAT: DeferredHolder<NutrientType, NutrientType> = registry.register("fat") { id ->
-        NutrientType(id, displayColor = 0x8b7e66)
-    }
+    val FAT: DeferredHolder<NutrientType, NutrientType> = registry.register("fat", ::NutrientType)
 
     @JvmStatic
-    val FIBER: DeferredHolder<NutrientType, NutrientType> = registry.register("fiber") { id ->
-        NutrientType(id, displayColor = 0x32cd32)
-    }
+    val FIBER: DeferredHolder<NutrientType, NutrientType> = registry.register("fiber", ::NutrientType)
 
     @JvmStatic
-    val ELECTROLYTE: DeferredHolder<NutrientType, NutrientType> = registry.register("electrolyte") { id ->
-        NutrientType(id, displayColor = 0x00ced1)
-    }
+    val ELECTROLYTE: DeferredHolder<NutrientType, NutrientType> = registry.register("electrolyte", ::NutrientType)
 
     @EventBusSubscriber(modid = TheMod.ID)
     object RegisterHandler {

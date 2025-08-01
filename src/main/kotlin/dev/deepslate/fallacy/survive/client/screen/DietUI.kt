@@ -20,6 +20,7 @@ import dev.deepslate.fallacy.base.client.screen.UIContext
 import dev.deepslate.fallacy.base.client.screen.component.ContextWrapperUI
 import dev.deepslate.fallacy.base.client.screen.component.ProcessBar
 import dev.deepslate.fallacy.survive.ModAttachments
+import dev.deepslate.fallacy.survive.client.NutrientTypeColor
 import dev.deepslate.fallacy.survive.diet.NutrientType
 import dev.deepslate.fallacy.survive.diet.alternativeAttribute
 import dev.deepslate.fallacy.survive.diet.attribute
@@ -104,7 +105,7 @@ class DietUI : ContextWrapperUI() {
                 sourceType.component,
                 value.toInt(),
                 attributeValue.toInt(),
-                RGB.from(sourceType.displayColor)
+                NutrientTypeColor[sourceType]
             )
         }
 

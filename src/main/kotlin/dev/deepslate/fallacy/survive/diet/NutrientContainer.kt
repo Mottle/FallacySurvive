@@ -60,15 +60,12 @@ data class NutrientContainer(val nutritionMap: Map<NutrientType, Float>) : Itera
         return NutrientContainer(newMap)
     }
 
-    private fun format(pair: Pair<NutrientType, Float>) =
-        pair.first to pair.second.coerceIn(pair.first.minValue, pair.first.maxValue)
-
-    fun update(type: NutrientType, value: Float) = NutrientContainer(nutritionMap + (type to value).let(::format))
+    fun update(type: NutrientType, value: Float) = NutrientContainer(nutritionMap + (type to value))
 
     fun update(holder: Holder<NutrientType>, value: Float) = update(holder.value(), value)
 
     fun update(type: NutrientType, valueGetter: (Float) -> Float) =
-        NutrientContainer(nutritionMap + (type to (valueGetter(nutritionMap[type] ?: 0f))).let(::format))
+        NutrientContainer(nutritionMap + (type to (valueGetter(nutritionMap[type] ?: 0f))))
 
     fun update(holder: Holder<NutrientType>, valueGetter: (Float) -> Float) = update(holder.value(), valueGetter)
 

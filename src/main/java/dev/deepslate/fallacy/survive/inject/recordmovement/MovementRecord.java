@@ -2,7 +2,7 @@ package dev.deepslate.fallacy.survive.inject.recordmovement;
 
 public interface MovementRecord {
 
-    default void fallacy$recordSprint(float value) {
+    default void fallacy$setSprint(float value) {
         throw new UnsupportedOperationException("This will not happen");
     }
 
@@ -12,7 +12,7 @@ public interface MovementRecord {
 
     default float fallacy$getAndResetSprintDistance() {
         float cached = fallacy$getSprintDistance();
-        fallacy$recordSprint(0f);
+        fallacy$setSprint(0f);
         return cached;
     }
 }

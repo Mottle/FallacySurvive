@@ -13,8 +13,8 @@ public class ServerPlayerMixin implements MovementRecord {
     private float fallacy$recordSprintDistance = 0.0f;
 
     @Override
-    public void fallacy$recordSprint(float value) {
-        this.fallacy$recordSprintDistance += value;
+    public void fallacy$setSprint(float value) {
+        this.fallacy$recordSprintDistance = value;
     }
 
     @Override
