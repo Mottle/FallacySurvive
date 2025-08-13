@@ -47,6 +47,12 @@ object ModAttachments {
 //            AttachmentType.builder { _ -> 0f }.serialize(Codec.FLOAT).build()
 //        }
 
+    @JvmStatic
+    //记录热敏感体(生物、具有热交换能力的方块)的热量
+    val HEAT: DeferredHolder<AttachmentType<*>, AttachmentType<Float>> = registry.register("heat") { _ ->
+        AttachmentType.builder { _ -> 0f }.serialize(Codec.FLOAT).build()
+    }
+
     @EventBusSubscriber(modid = TheMod.ID)
     object RegisterHandler {
         @SubscribeEvent

@@ -81,7 +81,7 @@ data class LivingEntityNutritionState(val container: NutrientContainer = Nutrien
 
     private fun finetune(entity: LivingEntity) = container.associate { (type, value) ->
         val maxAttributeValue = entity.getAttributeValue(type.attribute ?: type.alternativeAttribute!!).toFloat()
-        type to value.coerceAtMost(maxAttributeValue)
+        type to value.coerceIn(0f, maxAttributeValue)
     }.let(::NutrientContainer).let(::LivingEntityNutritionState)
 
     infix operator fun get(type: NutrientType) = container[type]

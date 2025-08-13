@@ -112,6 +112,7 @@ dependencies {
     implementation("thedarkcolour:kotlinforforge-neoforge:${project.property("kotlin4forge_version")}")
 
     implementation(project(":base"))
+    implementation(project(":thermal"))
 }
 
 // 模组元数据生成任务
