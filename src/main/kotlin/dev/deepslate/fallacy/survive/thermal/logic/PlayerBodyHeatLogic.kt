@@ -19,11 +19,11 @@ object PlayerBodyHeatLogic {
         val player = event.entity as? ServerPlayer ?: return
         val cap = player.getCapability(ModCapabilities.BODY_HEAT)!!
         cap.tick()
-        TheMod.LOGGER.debug(
-            "{}: {}, env: {}",
-            player.name,
-            cap.heat,
-            ThermodynamicsEngine.getHeat(player.level(), player.blockPosition())
-        )
+//        TheMod.LOGGER.debug(
+//            "{}: {}, env: {}",
+//            player.name,
+//            cap.heat,
+//            ThermodynamicsEngine.getHeat(player.level(), player.blockPosition())
+//        )
     }
 }

@@ -42,6 +42,7 @@ class HumanBodyHeat(val livingEntity: LivingEntity) : HeatSensitive {
     }
 
     override fun tick() {
+        if (livingEntity.isInvulnerable) return
         val blockPos = livingEntity.blockPosition()
         val localHeat = ThermodynamicsEngine.getHeat(livingEntity.level(), blockPos)
 

@@ -25,6 +25,7 @@ object CarbohydrateCauseHandler {
         val player = event.entity as? ServerPlayer ?: return
         val diet = player.getCapability(ModCapabilities.DIET)!!
 
+        if (player.isInvulnerable) return
         if (diet.nutrition[ModNutritionTypes.CARBOHYDRATE] <= 30f) {
             val effectInstances = createLowCarbohydrateDebuffs()
             player.addEffect(effectInstances)

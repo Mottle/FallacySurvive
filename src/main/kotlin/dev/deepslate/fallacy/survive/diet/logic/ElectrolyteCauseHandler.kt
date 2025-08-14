@@ -43,6 +43,7 @@ object ElectrolyteCauseHandler {
         val sprintDistance5s = movementRecord.`fallacy$getAndResetSprintDistance`()
         val diet = player.getCapability(ModCapabilities.DIET)!!
 
+        if (player.isInvulnerable) return
         if (!diet.contains(ModNutritionTypes.ELECTROLYTE)) return
 
 //        TheMod.LOGGER.debug("cause ${sprintDistance5s * 0.01f} ELECTROLYTE")

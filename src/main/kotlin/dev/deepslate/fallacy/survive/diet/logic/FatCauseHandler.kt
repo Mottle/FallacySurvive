@@ -17,6 +17,8 @@ object FatCauseHandler {
         val player = event.entity as? ServerPlayer ?: return
         val diet = player.getCapability(ModCapabilities.DIET)!!
 
+        if(player.isInvulnerable) return
+
         //TODO
     }
 }

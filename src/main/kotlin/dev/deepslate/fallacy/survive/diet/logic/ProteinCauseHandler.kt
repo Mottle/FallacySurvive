@@ -18,6 +18,7 @@ object ProteinCauseHandler {
         val diet = player.getCapability(ModCapabilities.DIET)!!
         val nutritionState = diet.nutrition
 
+        if (player.isInvulnerable) return
         if (ModNutritionTypes.PROTEIN !in nutritionState) return
 
 //        val maxProtein = diet.nutrition[ModNutritionTypes.PROTEIN]

@@ -19,6 +19,8 @@ object FiberCauseHandler {
         val player = event.entity as? ServerPlayer ?: return
         val diet = player.getCapability(ModCapabilities.DIET)!!
 
+        if (player.isInvulnerable) return
+
         diet.cause(ModNutritionTypes.FIBER, 1f, player)
     }
 }
