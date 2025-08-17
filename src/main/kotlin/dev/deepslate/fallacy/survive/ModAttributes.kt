@@ -1,7 +1,6 @@
 package dev.deepslate.fallacy.survive
 
 import dev.deepslate.fallacy.thermal.ThermodynamicsEngine
-import dev.deepslate.fallacy.thermal.data.Temperature
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.entity.EntityType
 import net.minecraft.world.entity.ai.attributes.Attribute

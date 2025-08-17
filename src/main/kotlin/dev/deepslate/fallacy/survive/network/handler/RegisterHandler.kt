@@ -16,7 +16,7 @@ object RegisterHandler {
         val registrar = event.registrar(NETWORK_PROTOCOL_VERSION)
 
         registrar.playToClient(
-            ThirstSyncPacket.Companion.TYPE, ThirstSyncPacket.Companion.STREAM_CODEC,
+            ThirstSyncPacket.TYPE, ThirstSyncPacket.STREAM_CODEC,
             ThirstSyncHandler::handle
         )
 
@@ -43,6 +43,12 @@ object RegisterHandler {
             DisplayDietPacket.TYPE,
             DisplayDietPacket.STREAM_CODEC,
             DisplayDietHandler::handle
+        )
+
+        registrar.playToClient(
+            BodyHeatSyncPacket.TYPE,
+            BodyHeatSyncPacket.STREAM_CODEC,
+            BodyHeatSyncHandler::handle
         )
     }
 }

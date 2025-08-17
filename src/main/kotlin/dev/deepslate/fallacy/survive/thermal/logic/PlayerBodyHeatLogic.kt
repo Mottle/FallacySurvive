@@ -4,7 +4,6 @@ import dev.deepslate.fallacy.base.TickCollector
 import dev.deepslate.fallacy.survive.ModCapabilities
 import dev.deepslate.fallacy.survive.TheMod
 import dev.deepslate.fallacy.survive.thermal.entity.HumanBodyHeat
-import dev.deepslate.fallacy.thermal.ThermodynamicsEngine
 import net.minecraft.server.level.ServerPlayer
 import net.neoforged.bus.api.SubscribeEvent
 import net.neoforged.fml.common.EventBusSubscriber
