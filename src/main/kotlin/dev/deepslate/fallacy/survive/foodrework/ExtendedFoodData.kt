@@ -10,7 +10,8 @@ import kotlin.math.min
 
 class ExtendedFoodData : FoodData {
 
-    private var tempMaxLevel = 20
+    //避免反复查询最大食物属性
+    private var cachedMaxFoodLevel = 20
 
 //    private var eatenTickTimer = 0
 
@@ -20,14 +21,14 @@ class ExtendedFoodData : FoodData {
     }
 
     override fun add(foodLevel: Int, saturationLevel: Float) {
-        this.foodLevel = (foodLevel + this.foodLevel).coerceIn(0, tempMaxLevel)
+        this.foodLevel = (foodLevel + this.foodLevel).coerceIn(0, cachedMaxFoodLevel)
         this.saturationLevel =
             (saturationLevel + this.saturationLevel).coerceIn(0f, this.foodLevel.toFloat().coerceAtMost(20f))
     }
 
     fun getMaxFoodLevel(player: Player): Int {
-        tempMaxLevel = player.getAttributeValue(ModAttributes.MAX_HUNGER).toInt()
-        return tempMaxLevel
+        cachedMaxFoodLevel = player.getAttributeValue(ModAttributes.MAX_HUNGER).toInt()
+        return cachedMaxFoodLevel
     }
 
     fun reload(player: Player) {
@@ -93,5 +94,5 @@ class ExtendedFoodData : FoodData {
         }
     }
 
-    override fun needsFood(): Boolean = foodLevel < tempMaxLevel
+    override fun needsFood(): Boolean = foodLevel < cachedMaxFoodLevel
 }
