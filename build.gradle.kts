@@ -113,6 +113,8 @@ dependencies {
 
     implementation(project(":base"))
     implementation(project(":thermal"))
+
+    compileOnly(project(":hud"))
 }
 
 // 模组元数据生成任务
