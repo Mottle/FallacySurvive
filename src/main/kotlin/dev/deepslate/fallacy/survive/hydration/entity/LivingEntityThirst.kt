@@ -1,10 +1,12 @@
 package dev.deepslate.fallacy.survive.hydration.entity
 
+import dev.deepslate.fallacy.base.TickCollector
 import dev.deepslate.fallacy.survive.ModAttachments
 import dev.deepslate.fallacy.survive.ModAttributes
 import dev.deepslate.fallacy.survive.ModDamageTypes
 import dev.deepslate.fallacy.survive.effect.ModEffects
 import dev.deepslate.fallacy.survive.network.packet.ThirstSyncPacket
+import dev.deepslate.fallacy.utils.checkInvulnerable
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.damagesource.DamageSource
 import net.minecraft.world.effect.MobEffectInstance
@@ -39,14 +41,17 @@ class LivingEntityThirst(val entity: LivingEntity) : Thirst {
     private fun loss() = 1f
 
     override fun tick() {
-        if (entity.isInvulnerable) return
+        if (checkInvulnerable(entity)) return
 
 //        val ticks = player.getData(FallacyAttachments.THIRST_TICKS)
-        if (entity.tickCount % UPDATE_INTERVAL_TICKS == 0) {
+        //TODO use per entity tick
+        val tick = TickCollector.serverTickCount // entity.tickCount
+
+        if (tick % UPDATE_INTERVAL_TICKS == 0) {
             value = clamp(value - loss(), 0f, max)
         }
 
-        if (entity.tickCount % 20 == 0 && value <= 0f) {
+        if (tick % 20 == 0 && value <= 0f) {
             val damage = damage(entity)
             entity.hurt(damage, 2f)
             if (!entity.hasEffect(ModEffects.DEHYDRATION)) entity.addEffect(createEffect())

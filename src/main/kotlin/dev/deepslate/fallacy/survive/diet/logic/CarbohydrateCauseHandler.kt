@@ -6,6 +6,7 @@ import dev.deepslate.fallacy.survive.TheMod
 import dev.deepslate.fallacy.survive.diet.ModNutritionTypes
 import dev.deepslate.fallacy.survive.diet.entity.cause
 import dev.deepslate.fallacy.survive.effect.ModEffects
+import dev.deepslate.fallacy.utils.checkInvulnerable
 import dev.deepslate.fallacy.utils.seconds2Ticks
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.effect.MobEffectInstance
@@ -25,7 +26,7 @@ object CarbohydrateCauseHandler {
         val player = event.entity as? ServerPlayer ?: return
         val diet = player.getCapability(ModCapabilities.DIET)!!
 
-        if (player.isInvulnerable) return
+        if (checkInvulnerable(player)) return
         if (diet.nutrition[ModNutritionTypes.CARBOHYDRATE] <= 30f) {
             val effectInstances = createLowCarbohydrateDebuffs()
             player.addEffect(effectInstances)

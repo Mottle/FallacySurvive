@@ -7,6 +7,8 @@ import dev.deepslate.fallacy.survive.network.packet.BodyHeatSyncPacket
 import dev.deepslate.fallacy.survive.thermal.HeatSensitive
 import dev.deepslate.fallacy.survive.thermal.dh
 import dev.deepslate.fallacy.thermal.ThermodynamicsEngine
+import dev.deepslate.fallacy.utils.checkInvulnerable
+import dev.deepslate.fallacy.utils.seconds2Ticks
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.effect.MobEffects
@@ -54,7 +56,7 @@ class HumanBodyHeat(val player: Player) : HeatSensitive, Synchronous {
     }
 
     override fun tick() {
-        if (player.isInvulnerable) return
+        if (checkInvulnerable(player)) return
 
         val blockPos = player.blockPosition()
         val localHeat = ThermodynamicsEngine.getHeat(player.level(), blockPos)
@@ -90,12 +92,12 @@ class HumanBodyHeat(val player: Player) : HeatSensitive, Synchronous {
         when (val detHeat = (defaultBodyHeat - heat).absoluteValue) {
             in 0f..2f -> {}
             in 2f..5f -> {
-                val effect = MobEffectInstance(MobEffects.WEAKNESS, 10, 1)
+                val effect = MobEffectInstance(MobEffects.WEAKNESS, seconds2Ticks(10), 1)
                 player.addEffect(effect)
             }
 
             else -> {
-                val effect = MobEffectInstance(MobEffects.WEAKNESS, 10, 3)
+                val effect = MobEffectInstance(MobEffects.WEAKNESS, seconds2Ticks(10), 3)
                 player.addEffect(effect)
                 val source =
                     if (detHeat.sign > 0) player.level().damageSources().onFire() else player.level().damageSources()

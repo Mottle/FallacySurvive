@@ -4,6 +4,7 @@ import dev.deepslate.fallacy.survive.ModCapabilities
 import dev.deepslate.fallacy.survive.TheMod
 import dev.deepslate.fallacy.survive.diet.ModNutritionTypes
 import dev.deepslate.fallacy.survive.diet.entity.cause
+import dev.deepslate.fallacy.utils.checkInvulnerable
 import net.minecraft.server.level.ServerPlayer
 import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.SubscribeEvent
@@ -18,7 +19,7 @@ object ProteinCauseHandler {
         val diet = player.getCapability(ModCapabilities.DIET)!!
         val nutritionState = diet.nutrition
 
-        if (player.isInvulnerable) return
+        if (checkInvulnerable(player)) return
         if (ModNutritionTypes.PROTEIN !in nutritionState) return
 
 //        val maxProtein = diet.nutrition[ModNutritionTypes.PROTEIN]

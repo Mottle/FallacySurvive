@@ -3,6 +3,7 @@ package dev.deepslate.fallacy.survive.diet.logic
 import dev.deepslate.fallacy.base.TickCollector
 import dev.deepslate.fallacy.survive.ModCapabilities
 import dev.deepslate.fallacy.survive.TheMod
+import dev.deepslate.fallacy.utils.checkInvulnerable
 import dev.deepslate.fallacy.utils.seconds2Ticks
 import net.minecraft.server.level.ServerPlayer
 import net.neoforged.bus.api.SubscribeEvent
@@ -17,7 +18,7 @@ object FatCauseHandler {
         val player = event.entity as? ServerPlayer ?: return
         val diet = player.getCapability(ModCapabilities.DIET)!!
 
-        if (player.isInvulnerable) return
+        if (checkInvulnerable(player)) return
 
         //TODO
     }

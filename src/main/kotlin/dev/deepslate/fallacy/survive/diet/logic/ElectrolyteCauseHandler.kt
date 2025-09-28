@@ -7,6 +7,7 @@ import dev.deepslate.fallacy.survive.diet.ModNutritionTypes
 import dev.deepslate.fallacy.survive.diet.entity.cause
 import dev.deepslate.fallacy.survive.diet.entity.contains
 import dev.deepslate.fallacy.survive.inject.recordmovement.MovementRecord
+import dev.deepslate.fallacy.utils.checkInvulnerable
 import dev.deepslate.fallacy.utils.seconds2Ticks
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.world.entity.ai.attributes.Attributes
@@ -43,7 +44,7 @@ object ElectrolyteCauseHandler {
         val sprintDistance5s = movementRecord.`fallacy$getAndResetSprintDistance`()
         val diet = player.getCapability(ModCapabilities.DIET)!!
 
-        if (player.isInvulnerable) return
+        if (checkInvulnerable(player)) return
         if (!diet.contains(ModNutritionTypes.ELECTROLYTE)) return
 
 //        TheMod.LOGGER.debug("cause ${sprintDistance5s * 0.01f} ELECTROLYTE")
