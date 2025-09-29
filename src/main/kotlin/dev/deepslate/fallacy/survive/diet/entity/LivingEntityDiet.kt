@@ -19,18 +19,24 @@ class LivingEntityDiet<E : LivingEntity>(override val entity: E) : Diet<E>, Sync
         get() = entity.getData(ModAttachments.FOOD_HISTORY)
         set(value) {
             entity.setData(ModAttachments.FOOD_HISTORY, value)
+//            markChanged()
+            synchronize()
         }
 
     override var nutrition: LivingEntityNutritionState
         get() = entity.getData(ModAttachments.NUTRITION_STATE)
         set(value) {
             entity.setData(ModAttachments.NUTRITION_STATE, value)
+//            markChanged()
+            synchronize()
         }
 
     override fun synchronize() {
         if (entity !is ServerPlayer) return
+
         PacketDistributor.sendToPlayer(entity, NutritionStateSyncPacket(nutrition))
         PacketDistributor.sendToPlayer(entity, FoodHistorySyncPacket(history))
+//        changed = false
     }
 
     override fun getFullEffectInstance(fullLevel: Int): MobEffectInstance {
@@ -56,4 +62,11 @@ class LivingEntityDiet<E : LivingEntity>(override val entity: E) : Diet<E>, Sync
             else -> 12f
         }
     }
+
+//    var changed = false
+//        private set
+//
+//    fun markChanged() {
+//        changed = true
+//    }
 }

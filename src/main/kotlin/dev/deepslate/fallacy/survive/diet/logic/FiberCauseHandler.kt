@@ -17,6 +17,7 @@ object FiberCauseHandler {
     @SubscribeEvent
     fun onServerPlayerTick(event: PlayerTickEvent.Post) {
         if (!TickCollector.checkServerTickInterval(seconds2Ticks(10))) return
+
         val player = event.entity as? ServerPlayer ?: return
         val diet = player.getCapability(ModCapabilities.DIET)!!
 
