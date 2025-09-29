@@ -23,6 +23,6 @@ object FiberCauseHandler {
 
         if (checkInvulnerable(player)) return
 
-        diet.cause(ModNutritionTypes.FIBER, 1f, player)
+        diet.cause(ModNutritionTypes.FIBER, 1f / 12f, player)
     }
 }
