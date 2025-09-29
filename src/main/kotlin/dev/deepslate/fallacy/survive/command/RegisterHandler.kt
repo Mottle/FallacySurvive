@@ -14,5 +14,5 @@ object RegisterHandler {
     }
 
     @JvmStatic
-    val commands = setOf(ThirstSet, ThirstQuery, DietQuery)
+    val commands = setOf(ThirstSet, ThirstQuery, DietQuery, DietReset)
 }
