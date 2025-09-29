@@ -19,20 +19,26 @@ data object DietQuery : GameCommand {
     override val suggestions: Map<String, SuggestionProvider<CommandSourceStack>> =
         mapOf("name" to SimpleSuggestionProvider.SERVER_PLAYER_NAME)
 
-    override val permissionRequired: String? = "fallacy_survive.command.diet.query"
+    override val permissionRequired: String = "fallacy_survive.command.diet.query"
 
     override fun execute(context: CommandContext<CommandSourceStack>): Int {
         val playerName = StringArgumentType.getString(context, "name")
-        val player = ServerLifecycleHooks.getCurrentServer()?.playerList?.getPlayerByName(playerName)
+        val targetPlayer = ServerLifecycleHooks.getCurrentServer()?.playerList?.getPlayerByName(playerName)
+        val sourcePlayer = context.source.player
 
-        if (player == null) {
+        if (targetPlayer == null) {
             context.source.sendFailure(Component.literal("Player not found"))
             return Command.SINGLE_SUCCESS
         }
 
-        val diet = player.getCapability(ModCapabilities.DIET)!!
+        if(sourcePlayer == null) {
+            context.source.sendFailure(Component.literal("You are not a player"))
+            return Command.SINGLE_SUCCESS
+        }
+
+        val diet = targetPlayer.getCapability(ModCapabilities.DIET)!!
         val data = diet.nutrition
-        PacketDistributor.sendToPlayer(player, DisplayDietPacket(data))
+        PacketDistributor.sendToPlayer(sourcePlayer, DisplayDietPacket(data))
 
         return Command.SINGLE_SUCCESS
     }
