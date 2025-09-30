@@ -105,13 +105,15 @@ object VanillaExtendedFoodPropertiesHandler {
         val fiber: Float = 0f,
         val electrolyte: Float = 0f
     ) {
+        val multiply = 4f
+
         //临时翻倍
         fun toFoodNutrition() = mapOf(
-            ModNutritionTypes.CARBOHYDRATE to carbohydrate * 2,
-            ModNutritionTypes.PROTEIN to protein * 2,
-            ModNutritionTypes.FAT to fat * 2,
-            ModNutritionTypes.FIBER to fiber * 2,
-            ModNutritionTypes.ELECTROLYTE to electrolyte * 2
+            ModNutritionTypes.CARBOHYDRATE to carbohydrate * multiply,
+            ModNutritionTypes.PROTEIN to protein * multiply,
+            ModNutritionTypes.FAT to fat * multiply,
+            ModNutritionTypes.FIBER to fiber * multiply,
+            ModNutritionTypes.ELECTROLYTE to electrolyte * multiply
         ).mapKeys { (key, _) -> key.value() }.let(::NutrientContainer).let(::FoodNutrition)
     }
 } 

@@ -6,10 +6,12 @@ import dev.deepslate.fallacy.survive.TheMod
 import dev.deepslate.fallacy.survive.diet.ModNutritionTypes
 import dev.deepslate.fallacy.survive.diet.entity.cause
 import dev.deepslate.fallacy.survive.diet.entity.contains
+import dev.deepslate.fallacy.survive.effect.ModEffects
 import dev.deepslate.fallacy.survive.inject.recordmovement.MovementRecord
 import dev.deepslate.fallacy.utils.checkInvulnerable
 import dev.deepslate.fallacy.utils.seconds2Ticks
 import net.minecraft.server.level.ServerPlayer
+import net.minecraft.world.effect.MobEffectInstance
 import net.minecraft.world.entity.ai.attributes.Attributes
 import net.neoforged.bus.api.EventPriority
 import net.neoforged.bus.api.SubscribeEvent
@@ -46,6 +48,13 @@ object ElectrolyteCauseHandler {
 
         if (checkInvulnerable(player)) return
         if (!diet.contains(ModNutritionTypes.ELECTROLYTE)) return
+
+        val electrolyte = diet.nutrition[ModNutritionTypes.ELECTROLYTE]
+
+        if (electrolyte <= 20f) {
+            val effect = MobEffectInstance(ModEffects.LOW_ELECTROLYTE, seconds2Ticks(10))
+            player.addEffect(effect)
+        }
 
 //        TheMod.LOGGER.debug("cause ${sprintDistance5s * 0.01f} ELECTROLYTE")
 

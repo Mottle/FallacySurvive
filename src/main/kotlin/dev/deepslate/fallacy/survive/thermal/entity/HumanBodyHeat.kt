@@ -3,6 +3,7 @@ package dev.deepslate.fallacy.survive.thermal.entity
 import dev.deepslate.fallacy.base.capability.Synchronous
 import dev.deepslate.fallacy.survive.ModAttachments
 import dev.deepslate.fallacy.survive.ModAttributes
+import dev.deepslate.fallacy.survive.effect.ModEffects
 import dev.deepslate.fallacy.survive.network.packet.BodyHeatSyncPacket
 import dev.deepslate.fallacy.survive.thermal.HeatSensitive
 import dev.deepslate.fallacy.survive.thermal.dh
@@ -64,8 +65,15 @@ class HumanBodyHeat(val player: Player) : HeatSensitive, Synchronous {
 
         tickOverBodyHeat(defaultBodyHeat)
 
+        val localComfortableDet = localHeat - COMFORTABLE_HEAT
+        val relativeHeat =
+            if ((localComfortableDet > 1 && player.hasEffect(ModEffects.LOW_FIBER))
+                || (localComfortableDet < -1 && player.hasEffect(ModEffects.LOW_FAT))
+            ) 0.5 * MIN_RELATIVE_HEAT
+            else MIN_RELATIVE_HEAT
+
         //在舒适温度范围内
-        if ((localHeat - COMFORTABLE_HEAT).absoluteValue * conductivity < MIN_RELATIVE_HEAT) {
+        if (localComfortableDet.absoluteValue * conductivity < relativeHeat.toFloat()) {
             val det = defaultBodyHeat - heat
 
             if (det.absoluteValue < 0.2f) {

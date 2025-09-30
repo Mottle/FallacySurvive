@@ -2,6 +2,7 @@ package dev.deepslate.fallacy.survive.effect
 
 import dev.deepslate.fallacy.base.effect.GenericBeneficialEffect
 import dev.deepslate.fallacy.base.effect.GenericHarmfulEffect
+import dev.deepslate.fallacy.survive.ModAttributes
 import dev.deepslate.fallacy.survive.TheMod
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.effect.MobEffect
@@ -32,13 +33,13 @@ object ModEffects {
     @JvmStatic
     val LOW_CARBOHYDRATE: DeferredHolder<MobEffect, MobEffect> = registry.register("low_carbohydrate") { _ ->
         val id = TheMod.withID("effect.low_carbohydrate")
-        GenericHarmfulEffect(16262179)
-            .addAttributeModifier(Attributes.MOVEMENT_SPEED, id, -0.4, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
-            .addAttributeModifier(Attributes.ATTACK_DAMAGE, id, -0.8, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+        GenericHarmfulEffect(0x8b4726)
+            .addAttributeModifier(Attributes.MOVEMENT_SPEED, id, -0.25, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+            .addAttributeModifier(Attributes.ATTACK_DAMAGE, id, -0.6, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
             .addAttributeModifier(
-                Attributes.MINING_EFFICIENCY,
+                Attributes.ATTACK_SPEED,
                 id,
-                -0.5,
+                -0.3,
                 AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
             )
 //            .addAttributeModifier(Attributes.SCALE, id, -0.25, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
@@ -47,7 +48,7 @@ object ModEffects {
     @JvmStatic
     val LOW_PROTEIN: DeferredHolder<MobEffect, MobEffect> = registry.register("low_protein") { _ ->
         val id = TheMod.withID("effect.low_protein")
-        GenericHarmfulEffect(16262179)
+        GenericHarmfulEffect(0x8b4726)
             .addAttributeModifier(Attributes.SCALE, id, -0.25, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
             .addAttributeModifier(Attributes.ATTACK_DAMAGE, id, -0.2, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
             .addAttributeModifier(
@@ -67,12 +68,38 @@ object ModEffects {
                 id,
                 -0.2,
                 AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+            ).addAttributeModifier(
+                Attributes.MAX_HEALTH,
+                id,
+                -0.2,
+                AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
             )
     }
 
     @JvmStatic
     val LOW_ELECTROLYTE: DeferredHolder<MobEffect, MobEffect> = registry.register("low_electrolyte") { _ ->
-        GenericHarmfulEffect(16262179)
+        val id = TheMod.withID("effect.low_electrolyte")
+        GenericHarmfulEffect(0x8b4726).addAttributeModifier(
+            ModAttributes.MAX_THIRST,
+            id,
+            -0.2,
+            AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+        ).addAttributeModifier(
+            Attributes.BLOCK_INTERACTION_RANGE,
+            id,
+            -1.0,
+            AttributeModifier.Operation.ADD_VALUE
+        )
+    }
+
+    @JvmStatic
+    val LOW_FIBER: DeferredHolder<MobEffect, MobEffect> = registry.register("low_electrolyte") { _ ->
+        GenericHarmfulEffect(0x8b4726)
+    }
+
+    @JvmStatic
+    val LOW_FAT: DeferredHolder<MobEffect, MobEffect> = registry.register("low_electrolyte") { _ ->
+        GenericHarmfulEffect(0x8b4726)
     }
 
     @EventBusSubscriber(modid = TheMod.ID)
