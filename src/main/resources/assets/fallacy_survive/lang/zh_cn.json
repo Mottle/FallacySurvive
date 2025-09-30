@@ -1,6 +1,11 @@
 {
     "effect.fallacy_survive.dehydration": "脱水",
     "effect.fallacy_survive.full": "饱腹",
+    "effect.fallacy_survive.low_carbohydrate": "无力",
+    "effect.fallacy_survive.low_protein": "消瘦",
+    "effect.fallacy_survive.low_electrolyte": "抽搐",
+    "effect.fallacy_survive.low_fiber": "恐热",
+    "effect.fallacy_survive.low_fat": "畏寒",
 
     "death.attack.fallacy_survive.dehydration": "%1$s 死于脱水",
 

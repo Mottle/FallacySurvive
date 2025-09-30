@@ -1,6 +1,11 @@
 {
   "effect.fallacy_survive.dehydration": "Dehydration",
   "effect.fallacy_survive.full": "Full",
+  "effect.fallacy_survive.low_carbohydrate": "low carbohydrate",
+  "effect.fallacy_survive.low_protein": "low protein",
+  "effect.fallacy_survive.low_electrolyte": "low electrolyte",
+  "effect.fallacy_survive.low_fiber": "low fiber",
+  "effect.fallacy_survive.low_fat": "low fat",
 
   "death.attack.fallacy_survive.dehydration": "%1$s died of dehydration",
 

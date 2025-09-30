@@ -93,12 +93,12 @@ object ModEffects {
     }
 
     @JvmStatic
-    val LOW_FIBER: DeferredHolder<MobEffect, MobEffect> = registry.register("low_electrolyte") { _ ->
+    val LOW_FIBER: DeferredHolder<MobEffect, MobEffect> = registry.register("low_fiber") { _ ->
         GenericHarmfulEffect(0x8b4726)
     }
 
     @JvmStatic
-    val LOW_FAT: DeferredHolder<MobEffect, MobEffect> = registry.register("low_electrolyte") { _ ->
+    val LOW_FAT: DeferredHolder<MobEffect, MobEffect> = registry.register("low_fat") { _ ->
         GenericHarmfulEffect(0x8b4726)
     }
 
