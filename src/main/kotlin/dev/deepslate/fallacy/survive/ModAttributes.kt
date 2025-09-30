@@ -1,5 +1,6 @@
 package dev.deepslate.fallacy.survive
 
+import dev.deepslate.fallacy.survive.thermal.entity.HumanBodyHeat
 import dev.deepslate.fallacy.thermal.ThermodynamicsEngine
 import net.minecraft.core.registries.BuiltInRegistries
 import net.minecraft.world.entity.EntityType
@@ -64,11 +65,23 @@ object ModAttributes {
     val DEFAULT_BODY_HEAT: DeferredHolder<Attribute, Attribute> = registry.register("generic.default_body_heat") { _ ->
         RangedAttribute(
             "fallacy_survive.attribute.name.generic.default_body_heat",
-            ThermodynamicsEngine.fromFreezingPoint(37).toDouble(),
+            HumanBodyHeat.DEFAULT_BODY_HEAT.toDouble(),
             ThermodynamicsEngine.MIN_HEAT.toDouble(),
             ThermodynamicsEngine.MAX_HEAT.toDouble()
         ).setSyncable(true)
     }
+
+    //适宜温度 - 用于温度计算
+    @JvmStatic
+    val COMFORTABLE_BODY_HEAT: DeferredHolder<Attribute, Attribute> =
+        registry.register("generic.comfortable_body_heat") { _ ->
+            RangedAttribute(
+                "fallacy_survive.attribute.name.generic.comfortable_body_heat",
+                HumanBodyHeat.COMFORTABLE_HEAT.toDouble(),
+                ThermodynamicsEngine.MIN_HEAT.toDouble(),
+                ThermodynamicsEngine.MAX_HEAT.toDouble()
+            ).setSyncable(true)
+        }
 
     @JvmStatic
     val CONDUCTIVITY: DeferredHolder<Attribute, Attribute> = registry.register("generic.conductivity") { _ ->
@@ -99,6 +112,7 @@ object ModAttributes {
             event.add(EntityType.PLAYER, MAX_FIBER)
             event.add(EntityType.PLAYER, MAX_ELECTROLYTE)
             event.add(EntityType.PLAYER, DEFAULT_BODY_HEAT)
+            event.add(EntityType.PLAYER, COMFORTABLE_BODY_HEAT)
             event.add(EntityType.PLAYER, CONDUCTIVITY)
         }
     }

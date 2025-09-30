@@ -27,6 +27,9 @@ class HumanBodyHeat(val player: Player) : HeatSensitive, Synchronous {
 
         @JvmStatic
         val COMFORTABLE_HEAT = ThermodynamicsEngine.fromFreezingPoint(25)
+
+        @JvmStatic
+        val DEFAULT_BODY_HEAT = ThermodynamicsEngine.fromFreezingPoint(37)
     }
 
     override var conductivity: Float
@@ -65,7 +68,8 @@ class HumanBodyHeat(val player: Player) : HeatSensitive, Synchronous {
 
         tickOverBodyHeat(defaultBodyHeat)
 
-        val localComfortableDet = localHeat - COMFORTABLE_HEAT
+        val comfortableBodyHeat = player.getAttribute(ModAttributes.COMFORTABLE_BODY_HEAT)!!.value
+        val localComfortableDet = localHeat.toDouble() - comfortableBodyHeat
         val relativeHeat =
             if ((localComfortableDet > 1 && player.hasEffect(ModEffects.LOW_FIBER))
                 || (localComfortableDet < -1 && player.hasEffect(ModEffects.LOW_FAT))
