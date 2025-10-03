@@ -25,7 +25,7 @@ import dev.deepslate.fallacy.survive.diet.NutrientType
 import dev.deepslate.fallacy.survive.diet.alternativeAttribute
 import dev.deepslate.fallacy.survive.diet.attribute
 import dev.deepslate.fallacy.survive.diet.entity.LivingEntityNutritionState
-import dev.deepslate.fallacy.utils.RGB
+import dev.deepslate.fallacy.utils.ARGB
 import net.minecraft.client.Minecraft
 import net.minecraft.network.chat.Component
 import net.minecraft.network.chat.MutableComponent
@@ -137,7 +137,7 @@ class DietUI : ContextWrapperUI() {
         val description: MutableComponent,
         val value: Int,
         val max: Int,
-        val color: RGB
+        val color: ARGB
     ) :
         UIComponent {
         override fun build(

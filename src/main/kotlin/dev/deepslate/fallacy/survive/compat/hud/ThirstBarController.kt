@@ -3,7 +3,7 @@ package dev.deepslate.fallacy.survive.compat.hud
 import dev.deepslate.fallacy.hud.client.StatusBarUI
 import dev.deepslate.fallacy.survive.ModCapabilities
 import dev.deepslate.fallacy.survive.TheMod
-import dev.deepslate.fallacy.utils.RGB
+import dev.deepslate.fallacy.utils.ARGB
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.entity.Entity
 import net.minecraft.world.entity.player.Player
@@ -21,7 +21,7 @@ class ThirstBarController : StatusBarUI.Controller {
             return StatusBarUI.Status(value, max)
         }
 
-    override val color: RGB = RGB.from(0x1e90ff)
+    override val color: ARGB = ARGB.from(0x1e90ff)
 
     override val icon: ResourceLocation = TheMod.withID("thirst")
 

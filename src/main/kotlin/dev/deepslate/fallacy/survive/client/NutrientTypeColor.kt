@@ -2,7 +2,7 @@ package dev.deepslate.fallacy.survive.client
 
 import dev.deepslate.fallacy.survive.diet.ModNutritionTypes
 import dev.deepslate.fallacy.survive.diet.NutrientType
-import dev.deepslate.fallacy.utils.RGB
+import dev.deepslate.fallacy.utils.ARGB
 import net.minecraft.core.Holder
 import net.neoforged.api.distmarker.Dist
 import net.neoforged.api.distmarker.OnlyIn
@@ -10,23 +10,23 @@ import net.neoforged.api.distmarker.OnlyIn
 @OnlyIn(value = Dist.CLIENT)
 object NutrientTypeColor {
     @JvmStatic
-    val DEFAULT = RGB.from(0xff4500)
+    val DEFAULT = ARGB.from(0xff4500)
 
     @JvmStatic
-    private val colorMap = hashMapOf<NutrientType, RGB>()
+    private val colorMap = hashMapOf<NutrientType, ARGB>()
 
     infix operator fun get(type: NutrientType) = colorMap[type] ?: DEFAULT
 
     infix operator fun get(typeHolder: Holder<NutrientType>) = get(typeHolder.value())
 
-    operator fun set(type: NutrientType, color: RGB) {
+    operator fun set(type: NutrientType, color: ARGB) {
         colorMap[type] = color
     }
 
-    operator fun set(typeHolder: Holder<NutrientType>, color: RGB) = set(typeHolder.value(), color)
+    operator fun set(typeHolder: Holder<NutrientType>, color: ARGB) = set(typeHolder.value(), color)
 
     operator fun set(type: NutrientType, color: Int) {
-        colorMap[type] = RGB.from(color)
+        colorMap[type] = ARGB.from(color)
     }
 
     operator fun set(typeHolder: Holder<NutrientType>, color: Int) = set(typeHolder.value(), color)

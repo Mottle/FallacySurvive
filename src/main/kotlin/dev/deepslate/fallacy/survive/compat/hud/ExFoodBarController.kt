@@ -2,7 +2,7 @@ package dev.deepslate.fallacy.survive.compat.hud
 
 import dev.deepslate.fallacy.hud.client.StatusBarUI
 import dev.deepslate.fallacy.survive.foodrework.ExtendedFoodData
-import dev.deepslate.fallacy.utils.RGB
+import dev.deepslate.fallacy.utils.ARGB
 import net.minecraft.core.component.DataComponents
 import net.minecraft.resources.ResourceLocation
 import net.minecraft.world.effect.MobEffects
@@ -22,16 +22,16 @@ class ExFoodBarController : StatusBarUI.Controller {
         private val OVERLAY = ResourceLocation.withDefaultNamespace("hud/food_empty")
 
         @JvmStatic
-        private val COLOR = RGB.fromHex("#B34D00")
+        private val COLOR = ARGB.fromHex("#B34D00")
 
         @JvmStatic
-        private val HUNGER_DEBUFF_COLOR = RGB.fromHex("#249016")
+        private val HUNGER_DEBUFF_COLOR = ARGB.fromHex("#249016")
 
         @JvmStatic
-        private val SATURATION_COLOR = RGB.fromHex("#FFCC00")
+        private val SATURATION_COLOR = ARGB.fromHex("#FFCC00")
 
         @JvmStatic
-        private val SATURATION_DEBUFF_COLOR = RGB.fromHex("#87BC00")
+        private val SATURATION_DEBUFF_COLOR = ARGB.fromHex("#87BC00")
     }
 
     override val priority: Int = 1
@@ -45,7 +45,7 @@ class ExFoodBarController : StatusBarUI.Controller {
             return StatusBarUI.Status(value, upbound)
         }
 
-    override val color: RGB
+    override val color: ARGB
         get() = if (entity is Player && (entity as Player).hasEffect(MobEffects.HUNGER)) HUNGER_DEBUFF_COLOR else COLOR
 
     override val icon: ResourceLocation
@@ -72,7 +72,7 @@ class ExFoodBarController : StatusBarUI.Controller {
             return StatusBarUI.Status(value, 20f)
         }
 
-    override val secondaryColor: RGB
+    override val secondaryColor: ARGB
         get() = if (entity is Player && (entity as Player).hasEffect(MobEffects.HUNGER)) SATURATION_DEBUFF_COLOR else SATURATION_COLOR
 
     override val increment: Number
