@@ -31,7 +31,7 @@ data object DietQuery : GameCommand {
             return Command.SINGLE_SUCCESS
         }
 
-        if(sourcePlayer == null) {
+        if (sourcePlayer == null) {
             context.source.sendFailure(Component.literal("You are not a player"))
             return Command.SINGLE_SUCCESS
         }

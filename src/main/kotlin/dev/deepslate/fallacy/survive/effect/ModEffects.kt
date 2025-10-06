@@ -34,7 +34,12 @@ object ModEffects {
     val LOW_CARBOHYDRATE: DeferredHolder<MobEffect, MobEffect> = registry.register("low_carbohydrate") { _ ->
         val id = TheMod.withID("effect.low_carbohydrate")
         GenericHarmfulEffect(0x8b4726)
-            .addAttributeModifier(Attributes.MOVEMENT_SPEED, id, -0.25, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
+            .addAttributeModifier(
+                Attributes.MOVEMENT_SPEED,
+                id,
+                -0.25,
+                AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL
+            )
             .addAttributeModifier(Attributes.ATTACK_DAMAGE, id, -0.6, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
             .addAttributeModifier(
                 Attributes.ATTACK_SPEED,
