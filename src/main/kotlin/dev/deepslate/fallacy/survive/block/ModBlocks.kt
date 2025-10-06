@@ -10,7 +10,5 @@ object ModBlocks {
         TheMod.REGISTRATE.block("copper_boil_pot", ::BoilPot).blockstate { ctx, prov ->
             val model = prov.models().getExistingFile(TheMod.withID("block/copper_boil_pot"))
             prov.simpleBlock(ctx.entry, model)
-        }
-            .item().tab(ModCreativeTabs.SURVIVE.key!!).build()
-            .register()
+        }.item().tab(ModCreativeTabs.SURVIVE.key!!).build().register()
 }
