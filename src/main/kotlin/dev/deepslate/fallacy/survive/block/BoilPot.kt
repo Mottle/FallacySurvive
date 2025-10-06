@@ -4,6 +4,8 @@ import net.minecraft.core.BlockPos
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.state.BlockState
+import net.minecraft.world.level.block.state.StateDefinition
+import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.phys.shapes.BooleanOp
 import net.minecraft.world.phys.shapes.CollisionContext
 import net.minecraft.world.phys.shapes.Shapes
@@ -27,8 +29,19 @@ class BoilPot(properties: Properties) : Block(properties) {
 
         @JvmStatic
         val SHAPE = makeShape()
+
+        val FILLED: BooleanProperty = BooleanProperty.create("filled")
+    }
+
+    init {
+        registerDefaultState(stateDefinition.any().setValue(FILLED, false))
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape =
         SHAPE
+
+    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
+        super.createBlockStateDefinition(builder)
+        builder.add(FILLED)
+    }
 }
