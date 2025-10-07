@@ -29,6 +29,8 @@
     "msg.fallacy_survive.eat5_6": "你感到索然无味",
     "msg.fallacy_survive.eat7_8": "你感到难以下咽",
     "msg.fallacy_survive.eat_else": "口区",
-    "block.fallacy_survive.copper_boil_pot": "Copper Boil Pot",
-    "itemGroup.fallacy_survive.survive": "Survive"
+
+    "block.fallacy_survive.copper_boil_pot": "铜煮锅",
+
+    "itemGroup.fallacy_survive.survive": "生存"
 }

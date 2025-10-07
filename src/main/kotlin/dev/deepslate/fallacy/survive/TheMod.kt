@@ -22,7 +22,8 @@ object TheMod {
     val REGISTRATE: Registrate = Registrate.create(ID)
 
     init {
-        ModCreativeTabs.register(MOD_BUS)
+//        ModCreativeTabs.register(MOD_BUS)
+        ModCreativeTabs
         ModBlocks
         ModDamageTypes
         Lang
