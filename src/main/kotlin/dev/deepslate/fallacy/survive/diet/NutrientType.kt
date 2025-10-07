@@ -54,6 +54,10 @@ data class NutrientType(val id: ResourceLocation) {
 //        )
     }
 
+    init {
+        TheMod.REGISTRATE.addLang("nutrition", id, id.path.replaceFirstChar(Char::uppercase))
+    }
+
     @EventBusSubscriber(modid = TheMod.ID)
     object RegisterHandler {
         @SubscribeEvent

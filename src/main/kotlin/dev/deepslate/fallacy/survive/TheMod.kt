@@ -2,6 +2,7 @@ package dev.deepslate.fallacy.survive
 
 import com.tterrag.registrate.Registrate
 import dev.deepslate.fallacy.survive.block.ModBlocks
+import dev.deepslate.fallacy.survive.client.Lang
 import net.minecraft.resources.ResourceLocation
 import net.neoforged.fml.common.Mod
 import org.slf4j.Logger
@@ -23,5 +24,7 @@ object TheMod {
     init {
         ModCreativeTabs.register(MOD_BUS)
         ModBlocks
+        ModDamageTypes
+        Lang
     }
 }

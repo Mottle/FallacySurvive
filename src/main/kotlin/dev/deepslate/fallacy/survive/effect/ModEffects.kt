@@ -22,17 +22,22 @@ object ModEffects {
     @JvmStatic
     val DEHYDRATION: DeferredHolder<MobEffect, MobEffect> = registry.register("dehydration") { _ ->
         val id = TheMod.withID("effect.dehydration")
+        TheMod.REGISTRATE.addLang("effect", TheMod.withID("dehydration"), "Dehydration")
         GenericHarmfulEffect(0xffffff)
             .addAttributeModifier(Attributes.ATTACK_SPEED, id, -0.5, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
             .addAttributeModifier(Attributes.MOVEMENT_SPEED, id, -0.2, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
     }
 
     @JvmStatic
-    val FULL: DeferredHolder<MobEffect, MobEffect> = registry.register("full", GenericBeneficialEffect.of(16262179))
+    val FULL: DeferredHolder<MobEffect, MobEffect> = registry.register("full") { _ ->
+        TheMod.REGISTRATE.addLang("effect", TheMod.withID("full"), "Full")
+        GenericBeneficialEffect.of(16262179)
+    }
 
     @JvmStatic
     val LOW_CARBOHYDRATE: DeferredHolder<MobEffect, MobEffect> = registry.register("low_carbohydrate") { _ ->
         val id = TheMod.withID("effect.low_carbohydrate")
+        TheMod.REGISTRATE.addLang("effect", TheMod.withID("low_carbohydrate"), "Low Carbohydrate")
         GenericHarmfulEffect(0x8b4726)
             .addAttributeModifier(
                 Attributes.MOVEMENT_SPEED,
@@ -53,6 +58,7 @@ object ModEffects {
     @JvmStatic
     val LOW_PROTEIN: DeferredHolder<MobEffect, MobEffect> = registry.register("low_protein") { _ ->
         val id = TheMod.withID("effect.low_protein")
+        TheMod.REGISTRATE.addLang("effect", TheMod.withID("low_protein"), "Low Protein")
         GenericHarmfulEffect(0x8b4726)
             .addAttributeModifier(Attributes.SCALE, id, -0.25, AttributeModifier.Operation.ADD_MULTIPLIED_BASE)
             .addAttributeModifier(Attributes.ATTACK_DAMAGE, id, -0.2, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
@@ -84,6 +90,7 @@ object ModEffects {
     @JvmStatic
     val LOW_ELECTROLYTE: DeferredHolder<MobEffect, MobEffect> = registry.register("low_electrolyte") { _ ->
         val id = TheMod.withID("effect.low_electrolyte")
+        TheMod.REGISTRATE.addLang("effect", TheMod.withID("low_electrolyte"), "Low Electrolyte")
         GenericHarmfulEffect(0x8b4726).addAttributeModifier(
             ModAttributes.MAX_THIRST,
             id,
@@ -99,11 +106,13 @@ object ModEffects {
 
     @JvmStatic
     val LOW_FIBER: DeferredHolder<MobEffect, MobEffect> = registry.register("low_fiber") { _ ->
+        TheMod.REGISTRATE.addLang("effect", TheMod.withID("low_fiber"), "Low Fiber")
         GenericHarmfulEffect(0x8b4726)
     }
 
     @JvmStatic
     val LOW_FAT: DeferredHolder<MobEffect, MobEffect> = registry.register("low_fat") { _ ->
+        TheMod.REGISTRATE.addLang("effect", TheMod.withID("low_fat"), "Low Fat")
         GenericHarmfulEffect(0x8b4726)
     }
 
