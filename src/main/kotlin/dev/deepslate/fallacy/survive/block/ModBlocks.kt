@@ -12,14 +12,14 @@ import java.util.function.Supplier
 
 object ModBlocks {
     @JvmStatic
-    val COPPER_BOIL_POT: BlockEntry<BoilPot> = TheMod.REGISTRATE.block("copper_boil_pot", ::BoilPot)
+    val COPPER_BOIL_POT: BlockEntry<BoilPotBlock> = TheMod.REGISTRATE.block("copper_boil_pot", ::BoilPotBlock)
         .properties { p ->
             p.mapColor(MapColor.COLOR_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.COPPER)
                 .noOcclusion()
         }
         .blockstate { ctx, prov ->
             prov.getVariantBuilder(ctx.entry).forAllStates { state ->
-                val filled = state.getValue(BoilPot.FILLED)
+                val filled = state.getValue(BoilPotBlock.FILLED)
                 val unfilledModel = prov.models().getExistingFile(TheMod.withID("block/copper_boil_pot"))
                 val filledModel = prov.models().getExistingFile(TheMod.withID("block/filled_copper_boil_pot"))
                 val model = if (filled) filledModel else unfilledModel
@@ -28,7 +28,7 @@ object ModBlocks {
         }.color {
             Supplier {
                 BlockColor { blockState, getter, pos, tintIndex ->
-                    val filled = blockState.getValue(BoilPot.FILLED)
+                    val filled = blockState.getValue(BoilPotBlock.FILLED)
                     if (getter != null && pos != null && filled)
                         BiomeColors.getAverageWaterColor(getter, pos)
                     else -1

@@ -1,6 +1,7 @@
 package dev.deepslate.fallacy.survive
 
 import com.tterrag.registrate.Registrate
+import dev.deepslate.fallacy.survive.block.ModBlockEntities
 import dev.deepslate.fallacy.survive.block.ModBlocks
 import dev.deepslate.fallacy.survive.client.Lang
 import net.minecraft.resources.ResourceLocation
@@ -25,6 +26,7 @@ object TheMod {
 //        ModCreativeTabs.register(MOD_BUS)
         ModCreativeTabs
         ModBlocks
+        ModBlockEntities
         ModDamageTypes
         Lang
     }
