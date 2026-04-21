@@ -1,8 +1,8 @@
 package dev.deepslate.fallacy.survive.block
 
 import com.mojang.serialization.MapCodec
-import dev.deepslate.fallacy.survive.ModMenus
 import dev.deepslate.fallacy.survive.block.entity.BoilPotEntity
+import dev.deepslate.fallacy.survive.network.packet.DisplayBoilPotPacket
 import net.minecraft.core.BlockPos
 import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
@@ -34,6 +34,7 @@ import net.minecraft.world.phys.shapes.VoxelShape
 import net.neoforged.neoforge.capabilities.Capabilities
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
+import net.neoforged.neoforge.network.PacketDistributor
 
 class BoilPotBlock(properties: Properties) : BaseEntityBlock(properties) {
 
@@ -91,7 +92,7 @@ class BoilPotBlock(properties: Properties) : BaseEntityBlock(properties) {
         if (level.isClientSide) return InteractionResult.SUCCESS
         if (level.getBlockEntity(pos) !is BoilPotEntity) return InteractionResult.PASS
         val serverPlayer = player as? ServerPlayer ?: return InteractionResult.PASS
-        ModMenus.BOIL_POT_MENU.openMenu(serverPlayer, pos)
+        PacketDistributor.sendToPlayer(serverPlayer, DisplayBoilPotPacket(pos))
         return InteractionResult.CONSUME
     }
 

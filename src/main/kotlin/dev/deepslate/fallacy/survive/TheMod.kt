@@ -24,7 +24,6 @@ object TheMod {
     init {
 //        ModCreativeTabs.register(MOD_BUS)
         ModCreativeTabs
-        ModMenus
         ModBlocks
         ModBlockEntities
         ModDamageTypes
