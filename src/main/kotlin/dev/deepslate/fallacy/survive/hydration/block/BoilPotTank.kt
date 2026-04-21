@@ -4,6 +4,7 @@ import dev.deepslate.fallacy.survive.block.BoilPotBlock
 import dev.deepslate.fallacy.survive.block.entity.BoilPotEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.Level
+import net.minecraft.world.level.material.Fluids
 import net.neoforged.neoforge.fluids.FluidStack
 import net.neoforged.neoforge.fluids.capability.IFluidHandler
 import kotlin.math.min
@@ -39,6 +40,11 @@ class BoilPotTank(val level: Level, val pos: BlockPos) : IFluidHandler {
             return 0
         }
 
+        val existingIsWater = !entity.content.isEmpty && entity.content.fluid.isSame(Fluids.WATER)
+        if (existingIsWater && resource.fluid.isSame(Fluids.WATER)) {
+            return 0
+        }
+
         if (action.simulate()) {
             if (entity.content.isEmpty) {
                 return min(CAPACITY, resource.amount)
@@ -53,6 +59,9 @@ class BoilPotTank(val level: Level, val pos: BlockPos) : IFluidHandler {
 
         if (entity.content.isEmpty) {
             entity.content = resource.copyWithAmount(min(CAPACITY, resource.amount))
+            if (resource.fluid.isSame(Fluids.WATER)) {
+                entity.resetHeatToWaterTemperature()
+            }
             onContentsChanged()
             return entity.content.amount
         }

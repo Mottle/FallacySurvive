@@ -23,6 +23,7 @@ import net.neoforged.neoforge.items.ItemStackHandler
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import kotlin.math.abs
+import kotlin.math.max
 import kotlin.math.min
 
 class BoilPotEntity(type: BlockEntityType<*>, val pos: BlockPos, state: BlockState) : BlockEntity(type, pos, state) {
@@ -38,11 +39,24 @@ class BoilPotEntity(type: BlockEntityType<*>, val pos: BlockPos, state: BlockSta
         private const val EMPTY_COOL_DOWN_RATE_PER_SECOND = 30f
         private const val FILLED_HEAT_UP_RATE_PER_SECOND = 20f
         private const val FILLED_COOL_DOWN_RATE_PER_SECOND = 10f
+        private const val WATER_RESET_TEMPERATURE_CELSIUS = 20
+        private const val MIN_MAX_HEAT_CELSIUS = 120
         private const val HEAT_SYNC_THRESHOLD = 0.5f
         private const val HEAT_SYNC_INTERVAL_TICKS = 20 * 5
 
         fun serverTick(level: Level, pos: BlockPos, state: BlockState, entity: BoilPotEntity) {
             if (level.isClientSide) return
+
+            if (!entity.heatInitialized) {
+                val initialHeat = ThermodynamicsEngine.getHeat(level, pos).toFloat()
+                entity.heat = initialHeat
+                entity.lastSyncedHeat = initialHeat
+                entity.ticksSinceLastHeatSync = 0
+                entity.heatInitialized = true
+                entity.setChanged()
+                level.sendBlockUpdated(pos, state, state, Block.UPDATE_CLIENTS)
+            }
+
             if (!TickCollector.checkServerTickInterval(TICK_INTERVAL)) return
 
             val oldConcentration = entity.concentration
@@ -83,6 +97,12 @@ class BoilPotEntity(type: BlockEntityType<*>, val pos: BlockPos, state: BlockSta
         }
 
         private fun updateHeatTowardsEnvironment(entity: BoilPotEntity, targetHeat: Float) {
+            val minimumMaxHeat = ThermodynamicsEngine.fromFreezingPoint(MIN_MAX_HEAT_CELSIUS).toFloat()
+            val maxAllowedHeat = max(minimumMaxHeat, targetHeat)
+            if (entity.heat > maxAllowedHeat) {
+                entity.heat = maxAllowedHeat
+            }
+
             val secondsPerStep = TICK_INTERVAL / 20f
             val isFilled = !entity.content.isEmpty
             val heatUpRate = if (isFilled) FILLED_HEAT_UP_RATE_PER_SECOND else EMPTY_HEAT_UP_RATE_PER_SECOND
@@ -93,7 +113,7 @@ class BoilPotEntity(type: BlockEntityType<*>, val pos: BlockPos, state: BlockSta
             val clampedDelta = if (delta > 0f) min(delta, maxStep) else -min(-delta, maxStep)
 
             if (clampedDelta == 0f) return
-            entity.heat += clampedDelta
+            entity.heat = (entity.heat + clampedDelta).coerceAtMost(maxAllowedHeat)
         }
 
     }
@@ -109,6 +129,18 @@ class BoilPotEntity(type: BlockEntityType<*>, val pos: BlockPos, state: BlockSta
     private var lastSyncedHeat = 0f
 
     private var ticksSinceLastHeatSync = 0
+
+    private var heatInitialized = false
+
+    fun resetHeatToWaterTemperature() {
+        val target = ThermodynamicsEngine.fromFreezingPoint(WATER_RESET_TEMPERATURE_CELSIUS).toFloat()
+        heat = target
+        lastSyncedHeat = target
+        ticksSinceLastHeatSync = 0
+        heatInitialized = true
+        setChanged()
+        level?.sendBlockUpdated(blockPos, blockState, blockState, Block.UPDATE_CLIENTS)
+    }
 
     val inventory: ItemStackHandler = object : ItemStackHandler(INVENTORY_SLOTS) {
         override fun isItemValid(slot: Int, stack: ItemStack): Boolean = false
@@ -152,7 +184,13 @@ class BoilPotEntity(type: BlockEntityType<*>, val pos: BlockPos, state: BlockSta
             }
         }
 
-        heat = tag.getFloat("heat")
+        if (tag.contains("heat")) {
+            heat = tag.getFloat("heat")
+            heatInitialized = true
+        } else {
+            heat = 0f
+            heatInitialized = false
+        }
         boiledTicks = tag.getInt("boiled_ticks")
         concentration = tag.getInt("concentration")
 
