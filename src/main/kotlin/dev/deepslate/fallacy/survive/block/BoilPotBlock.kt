@@ -1,11 +1,14 @@
 package dev.deepslate.fallacy.survive.block
 
 import com.mojang.serialization.MapCodec
+import dev.deepslate.fallacy.survive.ModMenus
 import dev.deepslate.fallacy.survive.block.entity.BoilPotEntity
 import net.minecraft.core.BlockPos
+import net.minecraft.server.level.ServerPlayer
 import net.minecraft.sounds.SoundEvents
 import net.minecraft.sounds.SoundSource
 import net.minecraft.world.InteractionHand
+import net.minecraft.world.InteractionResult
 import net.minecraft.world.ItemInteractionResult
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
@@ -77,6 +80,20 @@ class BoilPotBlock(properties: Properties) : BaseEntityBlock(properties) {
 //
 //        return InteractionResult.CONSUME
 //    }
+
+    override fun useWithoutItem(
+        state: BlockState,
+        level: Level,
+        pos: BlockPos,
+        player: Player,
+        hitResult: BlockHitResult
+    ): InteractionResult {
+        if (level.isClientSide) return InteractionResult.SUCCESS
+        if (level.getBlockEntity(pos) !is BoilPotEntity) return InteractionResult.PASS
+        val serverPlayer = player as? ServerPlayer ?: return InteractionResult.PASS
+        ModMenus.BOIL_POT_MENU.openMenu(serverPlayer, pos)
+        return InteractionResult.CONSUME
+    }
 
     override fun useItemOn(
         stack: ItemStack,
@@ -166,6 +183,11 @@ class BoilPotBlock(properties: Properties) : BaseEntityBlock(properties) {
         newState: BlockState,
         movedByPiston: Boolean
     ) {
+        if (!state.`is`(newState.block) && !level.isClientSide) {
+            val entity = level.getBlockEntity(pos) as? BoilPotEntity
+            entity?.dropInventory(level, pos)
+        }
+
         super.onRemove(state, level, pos, newState, movedByPiston)
         if (!state.`is`(newState.block)) level.invalidateCapabilities(pos)
     }

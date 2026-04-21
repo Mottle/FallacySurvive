@@ -1,6 +1,7 @@
 package dev.deepslate.fallacy.survive
 
 import dev.deepslate.fallacy.survive.block.ModBlockEntities
+import dev.deepslate.fallacy.survive.block.entity.BoilPotEntity
 import dev.deepslate.fallacy.survive.diet.entity.Diet
 import dev.deepslate.fallacy.survive.diet.entity.PlayerDietProvider
 import dev.deepslate.fallacy.survive.hydration.block.BoilPotTank
@@ -35,6 +36,10 @@ object ModCapabilities {
 
             event.registerBlockEntity(Capabilities.FluidHandler.BLOCK, ModBlockEntities.BOIL_POT.get()) { e, direct ->
                 if (direct != Direction.DOWN && e.level != null) BoilPotTank(e.level!!, e.pos) else null
+            }
+
+            event.registerBlockEntity(Capabilities.ItemHandler.BLOCK, ModBlockEntities.BOIL_POT.get()) { e, direct ->
+                if (direct == Direction.DOWN) null else (e as? BoilPotEntity)?.inventory
             }
         }
     }
