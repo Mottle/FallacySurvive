@@ -9,8 +9,10 @@ import net.neoforged.neoforge.network.handling.IPayloadContext
 //client side
 object DisplayDietHandler {
     fun handle(data: DisplayDietPacket, context: IPayloadContext) {
-        val state = data.nutrition
-        val ui = DietUI().withExistedNutritionState(state)
-        Minecraft.getInstance().setScreen(ExtendedUIRender(ui, isPause = false))
+        context.enqueueWork {
+            val state = data.nutrition
+            val ui = DietUI().withExistedNutritionState(state)
+            Minecraft.getInstance().setScreen(ExtendedUIRender(ui, isPause = false))
+        }
     }
 }

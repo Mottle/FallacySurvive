@@ -9,8 +9,10 @@ import net.neoforged.neoforge.network.handling.IPayloadContext
 object NutritionStateSyncHandler {
     @JvmStatic
     fun handle(data: NutritionStateSyncPacket, context: IPayloadContext) {
-        val player = context.player()
-        player.setData(ModAttachments.NUTRITION_STATE, data.state)
-        TheMod.LOGGER.info("Syncing nutrition data")
+        context.enqueueWork {
+            val player = context.player()
+            player.setData(ModAttachments.NUTRITION_STATE, data.state)
+            TheMod.LOGGER.info("Syncing nutrition data")
+        }
     }
 }

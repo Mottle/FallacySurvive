@@ -1,5 +1,7 @@
 # 为什么不使用Attachment
-由于<code>sprintDistance</code>需要每<code>tick</code>进行更新，属于热点代码，且每个玩家都需要更新一次，经测试使用<code>mixin</code>速度更快
+
+由于<code>sprintDistance</code>需要每<code>tick</code>进行更新，属于热点代码，且每个玩家都需要更新一次，经测试使用<code>
+mixin</code>速度更快
 
 以下是测试，时间单位为<code>nano</code>
 

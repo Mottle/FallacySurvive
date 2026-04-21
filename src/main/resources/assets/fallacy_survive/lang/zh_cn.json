@@ -6,17 +6,13 @@
     "effect.fallacy_survive.low_electrolyte": "抽搐",
     "effect.fallacy_survive.low_fiber": "恐热",
     "effect.fallacy_survive.low_fat": "畏寒",
-
     "death.attack.fallacy_survive.dehydration": "%1$s 死于脱水",
-
     "nutrition.fallacy_survive.carbohydrate": "碳水",
     "nutrition.fallacy_survive.protein": "蛋白质",
     "nutrition.fallacy_survive.fat": "脂肪",
     "nutrition.fallacy_survive.fiber": "纤维",
     "nutrition.fallacy_survive.electrolyte": "电解质",
-
     "gui.fallacy_survive.diet_ui.title": "营养",
-
     "item.tooltips.food_eat_times": "在过去%s次中你食用了%s次",
     "item.tooltips.food_never_eat": "最近还没吃过呢",
     "item.tooltips.full_level0": "微不足道",
@@ -24,13 +20,10 @@
     "item.tooltips.full_level2": "简餐",
     "item.tooltips.full_level3": "大餐",
     "item.tooltips.full_level4": "饕餮盛宴",
-
     "msg.fallacy_survive.eat3_4": "不太想吃了",
     "msg.fallacy_survive.eat5_6": "你感到索然无味",
     "msg.fallacy_survive.eat7_8": "你感到难以下咽",
     "msg.fallacy_survive.eat_else": "口区",
-
     "block.fallacy_survive.copper_boil_pot": "铜煮锅",
-
     "itemGroup.fallacy_survive.survive": "生存"
 }

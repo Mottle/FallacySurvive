@@ -9,7 +9,19 @@ import net.neoforged.neoforge.network.handling.IPayloadContext
 object ThirstSyncHandler {
     @JvmStatic
     fun handle(data: ThirstSyncPacket, context: IPayloadContext) {
-        context.player().getCapability(ModCapabilities.THIRST)!!.value = data.value
-        TheMod.LOGGER.info("Received ThirstSyncPacket with value: ${data.value}")
+        context.enqueueWork {
+            val player = context.player()
+            val cap = player.getCapability(ModCapabilities.THIRST)
+            if (cap == null) {
+                TheMod.LOGGER.warn(
+                    "Ignored ThirstSyncPacket: THIRST capability missing for player {}",
+                    player.scoreboardName
+                )
+                return@enqueueWork
+            }
+
+            cap.value = data.value
+            TheMod.LOGGER.info("Received ThirstSyncPacket with value: {}", data.value)
+        }
     }
 }

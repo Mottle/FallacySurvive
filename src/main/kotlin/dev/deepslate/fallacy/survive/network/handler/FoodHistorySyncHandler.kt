@@ -9,7 +9,9 @@ import net.neoforged.neoforge.network.handling.IPayloadContext
 object FoodHistorySyncHandler {
     @JvmStatic
     fun handle(data: FoodHistorySyncPacket, context: IPayloadContext) {
-        context.player().setData(ModAttachments.FOOD_HISTORY, data.history)
-        TheMod.LOGGER.info("Syncing food history")
+        context.enqueueWork {
+            context.player().setData(ModAttachments.FOOD_HISTORY, data.history)
+            TheMod.LOGGER.info("Syncing food history")
+        }
     }
 }

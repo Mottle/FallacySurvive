@@ -8,8 +8,10 @@ import net.neoforged.neoforge.network.handling.IPayloadContext
 //client
 object BodyHeatSyncHandler {
     fun handle(data: BodyHeatSyncPacket, context: IPayloadContext) {
-        val player = context.player()
-        player.setData(ModAttachments.HEAT, data.heat)
-        TheMod.LOGGER.info("Syncing body heat")
+        context.enqueueWork {
+            val player = context.player()
+            player.setData(ModAttachments.HEAT, data.heat)
+            TheMod.LOGGER.info("Syncing body heat")
+        }
     }
 }
