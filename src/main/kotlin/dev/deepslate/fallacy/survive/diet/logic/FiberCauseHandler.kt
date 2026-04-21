@@ -48,9 +48,9 @@ object FiberCauseHandler {
         if (det > HOT_HEAT_DET) {
             val rate = det / COLD_HEAT_DET
             val cause = rate * (1f / 6f)
-            diet.cause(ModNutritionTypes.FAT, cause.toFloat(), player)
+            diet.cause(ModNutritionTypes.FIBER, cause.toFloat(), player)
         } else {
-            diet.cause(ModNutritionTypes.FAT, 1f / 24f, player)
+            diet.cause(ModNutritionTypes.FIBER, 1f / 24f, player)
         }
     }
 }
