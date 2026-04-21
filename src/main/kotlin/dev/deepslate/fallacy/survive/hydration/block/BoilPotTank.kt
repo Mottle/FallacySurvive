@@ -40,48 +40,20 @@ class BoilPotTank(val level: Level, val pos: BlockPos) : IFluidHandler {
             return 0
         }
 
-        val existingIsWater = !entity.content.isEmpty && entity.content.fluid.isSame(Fluids.WATER)
-        if (existingIsWater && resource.fluid.isSame(Fluids.WATER)) {
+        if (!entity.content.isEmpty) {
             return 0
         }
 
         if (action.simulate()) {
-            if (entity.content.isEmpty) {
-                return min(CAPACITY, resource.amount)
-            }
-
-            if (!FluidStack.isSameFluidSameComponents(entity.content, resource)) {
-                return 0
-            }
-
-            return min(CAPACITY - entity.content.amount, resource.amount)
+            return min(CAPACITY, resource.amount)
         }
 
-        if (entity.content.isEmpty) {
-            entity.content = resource.copyWithAmount(min(CAPACITY, resource.amount))
-            if (resource.fluid.isSame(Fluids.WATER)) {
-                entity.resetHeatToWaterTemperature()
-            }
-            onContentsChanged()
-            return entity.content.amount
+        entity.content = resource.copyWithAmount(min(CAPACITY, resource.amount))
+        if (resource.fluid.isSame(Fluids.WATER)) {
+            entity.resetHeatToWaterTemperature()
         }
-
-        if (!FluidStack.isSameFluidSameComponents(entity.content, resource)) {
-            return 0
-        }
-
-        var filled: Int = CAPACITY - entity.content.amount
-
-        if (resource.amount < filled) {
-            entity.content.grow(resource.amount)
-            filled = resource.amount
-        } else {
-            entity.content.amount = CAPACITY
-        }
-
-        if (filled > 0) onContentsChanged()
-
-        return filled
+        onContentsChanged()
+        return entity.content.amount
     }
 
     private fun onContentsChanged() {
