@@ -17,14 +17,11 @@ import net.minecraft.world.item.Items
 import net.minecraft.world.level.BlockGetter
 import net.minecraft.world.level.Level
 import net.minecraft.world.level.block.BaseEntityBlock
-import net.minecraft.world.level.block.Block
 import net.minecraft.world.level.block.RenderShape
 import net.minecraft.world.level.block.entity.BlockEntity
 import net.minecraft.world.level.block.entity.BlockEntityTicker
 import net.minecraft.world.level.block.entity.BlockEntityType
 import net.minecraft.world.level.block.state.BlockState
-import net.minecraft.world.level.block.state.StateDefinition
-import net.minecraft.world.level.block.state.properties.BooleanProperty
 import net.minecraft.world.level.material.Fluids
 import net.minecraft.world.phys.BlockHitResult
 import net.minecraft.world.phys.shapes.BooleanOp
@@ -54,21 +51,10 @@ class BoilPotBlock(properties: Properties) : BaseEntityBlock(properties) {
 
         @JvmStatic
         val SHAPE = makeShape()
-
-        val FILLED: BooleanProperty = BooleanProperty.create("filled")
-    }
-
-    init {
-        registerDefaultState(stateDefinition.any().setValue(FILLED, false))
     }
 
     override fun getShape(state: BlockState, level: BlockGetter, pos: BlockPos, context: CollisionContext): VoxelShape =
         SHAPE
-
-    override fun createBlockStateDefinition(builder: StateDefinition.Builder<Block, BlockState>) {
-        super.createBlockStateDefinition(builder)
-        builder.add(FILLED)
-    }
 
 //    override fun useWithoutItem(
 //        state: BlockState,
@@ -148,13 +134,17 @@ class BoilPotBlock(properties: Properties) : BaseEntityBlock(properties) {
     ): ItemInteractionResult {
         if (!level.isClientSide) {
             val blockCap = level.getCapability(Capabilities.FluidHandler.BLOCK, pos, hitResult.direction)
-            val fluid = itemCap.drain(1000, IFluidHandler.FluidAction.EXECUTE)
-            val filled = blockCap?.fill(fluid, IFluidHandler.FluidAction.EXECUTE) ?: 0
 
-            fluid.amount -= filled
-            if (filled > 0) {
-                level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F);
-            }
+            val fluid = itemCap.drain(1000, IFluidHandler.FluidAction.SIMULATE)
+            if (fluid.isEmpty) return ItemInteractionResult.CONSUME
+
+            val filled = blockCap?.fill(fluid, IFluidHandler.FluidAction.SIMULATE) ?: 0
+            if (filled <= 0) return ItemInteractionResult.CONSUME
+
+            val actualFluid = itemCap.drain(filled, IFluidHandler.FluidAction.EXECUTE)
+            blockCap?.fill(actualFluid, IFluidHandler.FluidAction.EXECUTE)
+
+            level.playSound(null, pos, SoundEvents.BUCKET_EMPTY, SoundSource.BLOCKS, 1.0F, 1.0F)
         }
 
         return ItemInteractionResult.sidedSuccess(level.isClientSide)

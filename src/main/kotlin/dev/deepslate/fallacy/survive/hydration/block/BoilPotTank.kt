@@ -1,6 +1,5 @@
 package dev.deepslate.fallacy.survive.hydration.block
 
-import dev.deepslate.fallacy.survive.block.BoilPotBlock
 import dev.deepslate.fallacy.survive.block.entity.BoilPotEntity
 import net.minecraft.core.BlockPos
 import net.minecraft.world.level.Level
@@ -58,9 +57,13 @@ class BoilPotTank(val level: Level, val pos: BlockPos) : IFluidHandler {
 
     private fun onContentsChanged() {
         if (entity == null) return
-        if (entity.content.amount > 0) {
-            level.setBlockAndUpdate(pos, entity.blockState.setValue(BoilPotBlock.FILLED, true))
-        }
+        entity.setChanged()
+        level.sendBlockUpdated(
+            pos,
+            level.getBlockState(pos),
+            level.getBlockState(pos),
+            net.minecraft.world.level.block.Block.UPDATE_CLIENTS
+        )
     }
 
     override fun drain(resource: FluidStack, action: IFluidHandler.FluidAction): FluidStack {
@@ -85,6 +88,9 @@ class BoilPotTank(val level: Level, val pos: BlockPos) : IFluidHandler {
 
         if (action.execute() && drained > 0) {
             fluid.shrink(drained)
+            if (fluid.isEmpty) {
+                entity.content = FluidStack.EMPTY
+            }
             onContentsChanged()
         }
 
