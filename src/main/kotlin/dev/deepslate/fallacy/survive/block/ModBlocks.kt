@@ -13,5 +13,8 @@ object ModBlocks {
             p.mapColor(MapColor.COLOR_ORANGE).requiresCorrectToolForDrops().strength(3.0F, 6.0F).sound(SoundType.COPPER)
                 .noOcclusion()
         }
+        .blockstate { ctx, prov ->
+            prov.simpleBlock(ctx.get(), prov.models().getExistingFile(TheMod.withID("block/copper_boil_pot")))
+        }
         .item().tab(ModCreativeTabs.SURVIVE.key!!).build().register()
 }
