@@ -52,6 +52,9 @@
   construct events via `MOD_BUS`.
 - Container menus/screens should prefer Tau menu flow (`TauMenuHolder` + `TauMenuHelper.registerMenuScreen`) over
   ad-hoc `AbstractContainerMenu`/`AbstractContainerScreen` wiring.
+- **Do not use `bus = EventBusSubscriber.Bus.MOD`**. The `bus` parameter on `@EventBusSubscriber` is deprecated in newer
+  NeoForge/KFF versions. For MOD bus events (e.g., `FMLConstructModEvent`, `RegisterMenuScreensEvent`), register
+  listeners manually in `TheMod.init` via `MOD_BUS.addListener(...)` or `MOD_BUS.register(...)`.
 - Gameplay runtime logic is mostly tick/event driven:
     - hydration tick and drink interaction handlers,
     - diet cause/eat handlers,

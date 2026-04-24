@@ -51,10 +51,6 @@ object RegisterHandler {
             BodyHeatSyncHandler::handle
         )
 
-        registrar.playToClient(
-            DisplayBoilPotPacket.TYPE,
-            DisplayBoilPotPacket.STREAM_CODEC,
-            DisplayBoilPotHandler::handle
-        )
+
     }
 }
