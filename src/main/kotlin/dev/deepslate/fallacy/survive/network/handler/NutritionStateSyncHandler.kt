@@ -12,7 +12,7 @@ object NutritionStateSyncHandler {
         context.enqueueWork {
             val player = context.player()
             player.setData(ModAttachments.NUTRITION_STATE, data.state)
-            TheMod.LOGGER.info("Syncing nutrition data")
+            TheMod.LOGGER.debug("Syncing nutrition data")
         }
     }
 }

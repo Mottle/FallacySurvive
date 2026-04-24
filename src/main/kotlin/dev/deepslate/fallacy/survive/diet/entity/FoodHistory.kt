@@ -39,7 +39,7 @@ data class FoodHistory(val foods: List<ResourceLocation> = listOf()) {
     object Handler {
         fun handleSync(data: FoodHistorySyncPacket, context: IPayloadContext) {
             context.player().setData(ModAttachments.FOOD_HISTORY, data.history)
-            TheMod.LOGGER.info("Syncing food history.")
+            TheMod.LOGGER.debug("Syncing food history.")
         }
 
         @SubscribeEvent

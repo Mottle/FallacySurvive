@@ -11,7 +11,7 @@ object BodyHeatSyncHandler {
         context.enqueueWork {
             val player = context.player()
             player.setData(ModAttachments.HEAT, data.heat)
-            TheMod.LOGGER.info("Syncing body heat")
+            TheMod.LOGGER.debug("Syncing body heat")
         }
     }
 }

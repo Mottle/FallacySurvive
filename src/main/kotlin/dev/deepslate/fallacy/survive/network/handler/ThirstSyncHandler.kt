@@ -21,7 +21,7 @@ object ThirstSyncHandler {
             }
 
             cap.value = data.value
-            TheMod.LOGGER.info("Received ThirstSyncPacket with value: {}", data.value)
+            TheMod.LOGGER.debug("Received ThirstSyncPacket with value: {}", data.value)
         }
     }
 }

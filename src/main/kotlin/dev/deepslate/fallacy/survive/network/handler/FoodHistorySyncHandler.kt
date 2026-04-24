@@ -11,7 +11,7 @@ object FoodHistorySyncHandler {
     fun handle(data: FoodHistorySyncPacket, context: IPayloadContext) {
         context.enqueueWork {
             context.player().setData(ModAttachments.FOOD_HISTORY, data.history)
-            TheMod.LOGGER.info("Syncing food history")
+            TheMod.LOGGER.debug("Syncing food history")
         }
     }
 }
